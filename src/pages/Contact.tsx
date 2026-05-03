@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
 import { SITE } from "@/lib/site";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, LogIn, LogOut } from "lucide-react";
 
 export default function Contact() {
   useEffect(() => { document.title = "Kontakt · Apartman Dragićević"; }, []);
@@ -59,6 +59,27 @@ export default function Contact() {
               <div className="text-sm text-muted-foreground">Radno vreme</div>
               <div className="font-display text-xl">Svakog dana · 08–22h</div>
             </span>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="flex items-center gap-4 bg-card border border-border rounded-3xl p-6">
+              <span className="h-12 w-12 rounded-2xl bg-accent-soft text-accent grid place-items-center shrink-0">
+                <LogIn className="h-5 w-5" />
+              </span>
+              <span>
+                <div className="text-sm text-muted-foreground">Prijava (check-in)</div>
+                <div className="font-display text-xl">od 14:00h</div>
+              </span>
+            </div>
+            <div className="flex items-center gap-4 bg-card border border-border rounded-3xl p-6">
+              <span className="h-12 w-12 rounded-2xl bg-accent-soft text-accent grid place-items-center shrink-0">
+                <LogOut className="h-5 w-5" />
+              </span>
+              <span>
+                <div className="text-sm text-muted-foreground">Odjava (check-out)</div>
+                <div className="font-display text-xl">do 11:00h</div>
+              </span>
+            </div>
           </div>
         </div>
 
