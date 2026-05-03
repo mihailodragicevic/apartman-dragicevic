@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 33% 98%;
+    --foreground: 25 20% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 25 20% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 25 20% 12%;
+
+    --primary: 25 35% 22%;
+    --primary-foreground: 40 33% 98%;
+
+    --secondary: 35 25% 94%;
+    --secondary-foreground: 25 35% 22%;
+
+    --muted: 35 20% 95%;
+    --muted-foreground: 25 10% 42%;
+
+    --accent: 22 60% 52%;
+    --accent-foreground: 40 33% 98%;
+    --accent-soft: 22 70% 96%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 40 33% 98%;
+
+    --border: 30 15% 90%;
+    --input: 30 15% 90%;
+    --ring: 22 60% 52%;
+
+    --radius: 1rem;
+
+    --gradient-warm: linear-gradient(135deg, hsl(40 50% 97%), hsl(30 40% 94%));
+    --gradient-accent: linear-gradient(135deg, hsl(22 70% 58%), hsl(18 65% 48%));
+    --shadow-soft: 0 10px 40px -15px hsl(25 30% 25% / 0.15);
+    --shadow-card: 0 4px 24px -8px hsl(25 30% 25% / 0.08);
+    --shadow-glow: 0 20px 60px -20px hsl(22 60% 52% / 0.35);
+
+    --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .font-display { font-family: 'Fraunces', Georgia, serif; }
+  .text-balance { text-wrap: balance; }
+  .glass {
+    background: hsl(40 33% 98% / 0.72);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s var(--transition-smooth), transform 0.9s var(--transition-smooth);
+    will-change: transform, opacity;
+  }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes float-soft {
+  0%, 100% { transform: translate3d(0,0,0); }
+  50% { transform: translate3d(0,-14px,0); }
+}
+.animate-fade-in-up { animation: fade-in-up 0.8s var(--transition-smooth) both; }
+.animate-float { animation: float-soft 9s ease-in-out infinite; }
