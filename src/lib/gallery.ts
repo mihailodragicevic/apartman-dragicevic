@@ -1,19 +1,70 @@
-import hero from "@/assets/hero-apartment.jpg";
-import bedroom from "@/assets/bedroom.jpg";
-import kitchen from "@/assets/kitchen.jpg";
-import bathroom from "@/assets/bathroom.jpg";
-import yard from "@/assets/yard.jpg";
-import coffee from "@/assets/coffee.jpg";
-import living from "@/assets/living.jpg";
-import dining from "@/assets/dining.jpg";
+type GalleryItem = {
+  src: string;
+  alt: string;
+  w: number;
+  h: number;
+};
 
-export const gallery = [
-  { src: hero, alt: "Dnevni boravak apartmana u Bogatiću sa svetlim enterijerom", w: 1920, h: 1080 },
-  { src: bedroom, alt: "Spavaća soba sa udobnim krevetom i prirodnim svetlom", w: 1280, h: 896 },
-  { src: kitchen, alt: "Potpuno opremljena bela kuhinja sa aparatom za kafu", w: 1280, h: 896 },
-  { src: bathroom, alt: "Moderno kupatilo sa staklenim tuš kabinom", w: 1024, h: 1280 },
-  { src: living, alt: "Prostran dnevni boravak sa Smart TV-om", w: 1280, h: 896 },
-  { src: dining, alt: "Trpezarijski kutak sa drvenim stolom pored prozora", w: 1024, h: 1280 },
-  { src: coffee, alt: "Aparat za espresso kafu sa šoljama", w: 1024, h: 1024 },
-  { src: yard, alt: "Mirno dvorište sa baštenskim sedištima u sumrak", w: 1280, h: 896 },
+const photoModules = import.meta.glob("../assets/*.{jpg,jpeg,png,JPG,JPEG,PNG}", {
+  eager: true,
+  import: "default",
+}) as Record<string, string>;
+
+const preferredOrder = [
+  "hero-apartment.jpg",
+  "living.jpg",
+  "bedroom.jpg",
+  "bedroom2.jpg",
+  "kitchen.jpg",
+  "bathroom.jpg",
+  "dining.jpg",
+  "coffee.jpg",
+  "yard.jpg",
 ];
+
+const fileNameFromPath = (path: string) => path.split("/").pop() ?? path;
+
+const readableLabel = (fileName: string) => {
+  const base = fileName.replace(/\.[^.]+$/, "");
+
+  if (/^(img-|[0-9]{6,})/i.test(base)) {
+    return "Fotografija apartmana";
+  }
+
+  return base
+    .replace(/([a-zA-Z])(\d)/g, "$1 $2")
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
+const galleryEntries = Object.entries(photoModules).sort(([pathA], [pathB]) => {
+  const nameA = fileNameFromPath(pathA);
+  const nameB = fileNameFromPath(pathB);
+  const orderA = preferredOrder.indexOf(nameA);
+  const orderB = preferredOrder.indexOf(nameB);
+
+  if (orderA !== -1 || orderB !== -1) {
+    if (orderA === -1) return 1;
+    if (orderB === -1) return -1;
+    return orderA - orderB;
+  }
+
+  return nameA.localeCompare(nameB, undefined, { numeric: true });
+});
+
+export const gallery: GalleryItem[] = galleryEntries.map(([path, src], index) => {
+  const fileName = fileNameFromPath(path);
+  const label = readableLabel(fileName);
+  const needsIndex = label === "Fotografija apartmana";
+
+  return {
+    src,
+    alt: needsIndex
+      ? `Apartman Dragićević - fotografija ${index + 1}`
+      : `Apartman Dragićević - ${label}`,
+    w: 1600,
+    h: 1200,
+  };
+});

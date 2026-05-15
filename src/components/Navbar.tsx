@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { Phone, Menu, X } from "lucide-react";
+import logo from "@/assets/Logo_WEB 3.svg";
 import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -31,13 +32,12 @@ export default function Navbar() {
       )}
     >
       <div className="container flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group">
-          <span className="h-9 w-9 rounded-full bg-gradient-accent grid place-items-center text-accent-foreground font-display text-lg shadow-card">
-            D
-          </span>
-          <span className="font-display text-lg leading-tight">
-            Apartman <span className="italic">Dragićević</span>
-          </span>
+        <Link to="/" className="flex items-center">
+          <img
+            src={logo}
+            alt="Apartman Dragićević"
+            className="h-10 w-auto sm:h-12"
+          />
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">

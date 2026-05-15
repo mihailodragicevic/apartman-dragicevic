@@ -2,25 +2,30 @@ import { useEffect } from "react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
 import { SITE } from "@/lib/site";
-import { Phone, Mail, MapPin, Clock, LogIn, LogOut } from "lucide-react";
+import { Phone, Mail, MapPin, LogIn, LogOut } from "lucide-react";
 
 export default function Contact() {
-  useEffect(() => { document.title = "Kontakt · Apartman Dragićević"; }, []);
+  useEffect(() => {
+    document.title = "Kontakt · Apartman Dragićević";
+  }, []);
+
   return (
     <Layout>
-      <section className="container pt-36 pb-12">
+      <section className="container pb-12 pt-36">
         <SectionHeading
           eyebrow="Kontakt"
           title={<>Pozovite za <em className="italic text-accent">rezervaciju</em></>}
-          subtitle="Najbrži način — jedan poziv. Tu smo svakog dana, spremni da odgovorimo na sva vaša pitanja."
+          subtitle="Najbrži način - jedan poziv. Tu smo svakog dana, spremni da odgovorimo na sva vaša pitanja."
         />
       </section>
 
-      <section className="container grid lg:grid-cols-2 gap-8 pb-24">
+      <section className="container grid gap-8 pb-24 lg:grid-cols-2">
         <div className="reveal space-y-4">
-          <a href={SITE.phoneHref}
-            className="flex items-center gap-5 bg-gradient-accent text-accent-foreground rounded-3xl p-7 shadow-glow hover:-translate-y-0.5 transition-transform">
-            <span className="h-14 w-14 rounded-2xl bg-accent-foreground/15 grid place-items-center">
+          <a
+            href={SITE.phoneHref}
+            className="flex items-center gap-5 rounded-3xl bg-gradient-accent p-7 text-accent-foreground shadow-glow transition-transform hover:-translate-y-0.5"
+          >
+            <span className="grid h-14 w-14 place-items-center rounded-2xl bg-accent-foreground/15">
               <Phone className="h-6 w-6" />
             </span>
             <span>
@@ -29,9 +34,11 @@ export default function Contact() {
             </span>
           </a>
 
-          <a href={SITE.emailHref}
-            className="flex items-center gap-5 bg-card border border-border rounded-3xl p-7 hover:bg-secondary transition-colors">
-            <span className="h-14 w-14 rounded-2xl bg-accent-soft text-accent grid place-items-center">
+          <a
+            href={SITE.emailHref}
+            className="flex items-center gap-5 rounded-3xl border border-border bg-card p-7 transition-colors hover:bg-secondary"
+          >
+            <span className="grid h-14 w-14 place-items-center rounded-2xl bg-accent-soft text-accent">
               <Mail className="h-6 w-6" />
             </span>
             <span>
@@ -40,9 +47,13 @@ export default function Contact() {
             </span>
           </a>
 
-          <a href={SITE.mapsUrl} target="_blank" rel="noreferrer"
-            className="flex items-center gap-5 bg-card border border-border rounded-3xl p-7 hover:bg-secondary transition-colors">
-            <span className="h-14 w-14 rounded-2xl bg-accent-soft text-accent grid place-items-center">
+          <a
+            href={SITE.mapsUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-5 rounded-3xl border border-border bg-card p-7 transition-colors hover:bg-secondary"
+          >
+            <span className="grid h-14 w-14 place-items-center rounded-2xl bg-accent-soft text-accent">
               <MapPin className="h-6 w-6" />
             </span>
             <span>
@@ -51,19 +62,9 @@ export default function Contact() {
             </span>
           </a>
 
-          <div className="flex items-center gap-5 bg-card border border-border rounded-3xl p-7">
-            <span className="h-14 w-14 rounded-2xl bg-accent-soft text-accent grid place-items-center">
-              <Clock className="h-6 w-6" />
-            </span>
-            <span>
-              <div className="text-sm text-muted-foreground">Radno vreme</div>
-              <div className="font-display text-xl">Svakog dana · 08–22h</div>
-            </span>
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div className="flex items-center gap-4 bg-card border border-border rounded-3xl p-6">
-              <span className="h-12 w-12 rounded-2xl bg-accent-soft text-accent grid place-items-center shrink-0">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="flex items-center gap-4 rounded-3xl border border-border bg-card p-6">
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-accent-soft text-accent">
                 <LogIn className="h-5 w-5" />
               </span>
               <span>
@@ -71,8 +72,8 @@ export default function Contact() {
                 <div className="font-display text-xl">od 14:00h</div>
               </span>
             </div>
-            <div className="flex items-center gap-4 bg-card border border-border rounded-3xl p-6">
-              <span className="h-12 w-12 rounded-2xl bg-accent-soft text-accent grid place-items-center shrink-0">
+            <div className="flex items-center gap-4 rounded-3xl border border-border bg-card p-6">
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-accent-soft text-accent">
                 <LogOut className="h-5 w-5" />
               </span>
               <span>
@@ -83,12 +84,15 @@ export default function Contact() {
           </div>
         </div>
 
-        <div className="reveal rounded-3xl overflow-hidden shadow-soft border border-border min-h-[420px]">
+        <div className="reveal min-h-[420px] overflow-hidden rounded-3xl border border-border shadow-soft">
           <iframe
             title="Mapa - Pavla Orlovića 11, Bogatić"
             src="https://www.google.com/maps?q=Pavla+Orlovi%C4%87a+11+Bogati%C4%87&output=embed"
-            width="100%" height="100%" style={{ border: 0, minHeight: 420 }}
-            loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+            width="100%"
+            height="100%"
+            style={{ border: 0, minHeight: 420 }}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
       </section>
