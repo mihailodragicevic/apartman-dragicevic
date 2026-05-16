@@ -36,14 +36,14 @@ export default function Gallery() {
       </section>
 
       <section className="container pb-24">
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+        <div className="gallery-masonry columns-1 gap-4 sm:columns-2 lg:columns-3 [column-fill:_balance]">
           {gallery.map((g, i) => (
             <button
               key={i}
               type="button"
               aria-label={`Otvori fotografiju ${i + 1}`}
               onClick={() => setActive(i)}
-              className="reveal mb-4 block w-full overflow-hidden rounded-2xl bg-secondary group"
+              className="gallery-masonry-item reveal group mb-4 block w-full overflow-hidden rounded-2xl bg-secondary"
               style={{ transitionDelay: `${(i % 6) * 60}ms` }}
             >
               <img
@@ -52,7 +52,7 @@ export default function Gallery() {
                 loading="lazy"
                 width={g.w}
                 height={g.h}
-                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                className="gallery-masonry-image h-auto w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </button>
           ))}
