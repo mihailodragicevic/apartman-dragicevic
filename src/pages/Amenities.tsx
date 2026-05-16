@@ -1,16 +1,18 @@
-import { useEffect } from "react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
 import { amenities } from "@/lib/amenities";
 import { SITE } from "@/lib/site";
 import { Phone } from "lucide-react";
+import Seo from "@/components/Seo";
+import { baseSchemas, pageSeo } from "@/lib/seo";
 
 export default function Amenities() {
-  useEffect(() => { document.title = "Sadržaj · Apartman Dragićević"; }, []);
   return (
     <Layout>
+      <Seo {...pageSeo.amenities} schema={baseSchemas} />
       <section className="container pt-36 pb-12">
         <SectionHeading
+          as="h1"
           eyebrow="Sadržaj"
           title={<>Sve pogodnosti pod <em className="italic text-accent">jednim krovom</em></>}
           subtitle="Apartman je opremljen tako da imate sve što vam je potrebno za udoban boravak - bez kompromisa."

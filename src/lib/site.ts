@@ -1,6 +1,13 @@
 export const SITE = {
   name: "Apartman Dragićević",
   tagline: "Stan na dan - Bogatić",
+  siteUrl: "https://your-domain.example",
+  locale: "sr_RS",
+  htmlLang: "sr-Latn-RS",
+  themeColor: "#cd7442",
+  defaultDescription: "Apartman u Bogatiću na samo 100m od centra. Smeštaj za do 5 osoba sa parkingom, WiFi internetom, klimom i domaćinskim pristupom.",
+  ogImage: "/og/apartman-dragicevic-og.jpg",
+  ogImageAlt: "Apartman Dragićević u Bogatiću - promotivni prikaz enterijera i brenda",
   phone: "+381 65 8103247",
   phoneHref: "tel:+381658103247",
   email: "dragicevicapartman@gmail.com",

@@ -12,6 +12,8 @@ export default function Footer() {
             src={logo}
             alt="Apartman Dragićević"
             className="h-14 w-auto"
+            width={202}
+            height={140}
           />
           <p className="mt-3 max-w-sm text-muted-foreground">
             Stan na dan u Bogatiću, na samo 100m od centra. Udobnost, mir i domaćinski pristup.
@@ -24,7 +26,7 @@ export default function Footer() {
           <a href={SITE.emailHref} className="flex items-center gap-3 transition-colors hover:text-accent">
             <Mail className="h-4 w-4" /> {SITE.email}
           </a>
-          <a href={SITE.mapsUrl} target="_blank" rel="noreferrer" className="flex items-center gap-3 transition-colors hover:text-accent">
+          <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 transition-colors hover:text-accent">
             <MapPin className="h-4 w-4" /> {SITE.address}
           </a>
         </div>
@@ -43,7 +45,7 @@ export default function Footer() {
           <a
             href={SITE.instagramUrl}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-3 transition-colors hover:text-accent"
           >
             <Instagram className="h-4 w-4" /> @apartman_dragicevic

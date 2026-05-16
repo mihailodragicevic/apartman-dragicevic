@@ -22,8 +22,12 @@ export default function GalleryPreview() {
             style={{ transitionDelay: `${i * 80}ms` }}
           >
             <img
-              src={g.src} alt={g.alt} loading="lazy" width={g.w} height={g.h}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              src={g.src}
+              alt={g.alt}
+              loading="lazy"
+              width={g.w}
+              height={g.h}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
           </Link>
         ))}

@@ -19,7 +19,7 @@ export default function ReviewSection() {
         </div>
         <a
           href={SITE.reviewUrl}
-          target="_blank" rel="noreferrer"
+          target="_blank" rel="noopener noreferrer"
           className="inline-flex items-center gap-2 bg-card border border-border px-7 py-4 rounded-full font-semibold hover:bg-secondary transition-colors"
         >
           Ocenite nas na Google-u

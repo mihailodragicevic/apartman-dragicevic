@@ -37,6 +37,8 @@ export default function Navbar() {
             src={logo}
             alt="Apartman Dragićević"
             className="h-10 w-auto sm:h-12"
+            width={173}
+            height={120}
           />
         </Link>
 
@@ -71,6 +73,8 @@ export default function Navbar() {
             className="md:hidden h-10 w-10 rounded-full grid place-items-center bg-secondary"
             onClick={() => setOpen((v) => !v)}
             aria-label="Meni"
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -78,7 +82,7 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="md:hidden glass border-t border-border/60 mt-3 animate-fade-in-up">
+        <div id="mobile-navigation" className="md:hidden glass border-t border-border/60 mt-3 animate-fade-in-up">
           <div className="container py-4 flex flex-col gap-1">
             {links.map((l) => (
               <NavLink

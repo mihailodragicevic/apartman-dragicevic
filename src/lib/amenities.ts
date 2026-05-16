@@ -14,7 +14,6 @@ export const amenities = [
   { icon: Shirt, label: "Pegla i daska" },
   { icon: Fan, label: "Fen za kosu" },
   { icon: Trees, label: "Dvorište" },
-  { icon: BedDouble, label: "Do 5 osoba" },
   { icon: Utensils, label: "Opremljena kuhinja" },
   { icon: ShowerHead, label: "Moderno kupatilo" },
 ];

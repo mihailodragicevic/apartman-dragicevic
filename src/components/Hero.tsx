@@ -1,8 +1,16 @@
 import { useEffect, useRef } from "react";
 import { Phone, MapPin } from "lucide-react";
-import heroImg from "@/assets/hero-apartment.jpg";
 import { SITE } from "@/lib/site";
 import TypingText from "./TypingText";
+import { publicAssetPath } from "@/lib/publicAsset";
+
+const heroImageSrc = publicAssetPath("/images/hero/apartman-bogatic-hero-dnevni-boravak-1600.webp");
+const heroImageSrcSet = [
+  `${publicAssetPath("/images/hero/apartman-bogatic-hero-dnevni-boravak-640.webp")} 640w`,
+  `${publicAssetPath("/images/hero/apartman-bogatic-hero-dnevni-boravak-960.webp")} 960w`,
+  `${publicAssetPath("/images/hero/apartman-bogatic-hero-dnevni-boravak-1280.webp")} 1280w`,
+  `${publicAssetPath("/images/hero/apartman-bogatic-hero-dnevni-boravak-1600.webp")} 1600w`,
+].join(", ");
 
 export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -10,6 +18,11 @@ export default function Hero() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const supportsHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const isLargeViewport = window.innerWidth >= 1024;
+    if (prefersReducedMotion || !supportsHover || !isLargeViewport) return;
+
     let raf = 0;
     const onMove = (e: MouseEvent) => {
       cancelAnimationFrame(raf);
@@ -28,26 +41,31 @@ export default function Hero() {
     <section ref={ref} className="relative min-h-[100svh] flex items-center overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0">
-        <img
-          src={heroImg}
-          alt="Moderan dnevni boravak apartmana u Bogatiću"
-          className="w-full h-full object-cover"
-          width={1920}
-          height={1080}
-          fetchPriority="high"
-          style={{ transform: "translate3d(calc(var(--mx,0)*-10px), calc(var(--my,0)*-10px), 0) scale(1.05)" }}
-        />
+        <picture className="block h-full w-full">
+          <source srcSet={heroImageSrcSet} sizes="100vw" type="image/webp" />
+          <img
+            src={heroImageSrc}
+            srcSet={heroImageSrcSet}
+            sizes="100vw"
+            alt="Moderan dnevni boravak apartmana u Bogatiću"
+            className="h-full w-full object-cover"
+            width={1920}
+            height={1080}
+            fetchPriority="high"
+            style={{ transform: "translate3d(calc(var(--mx,0)*-10px), calc(var(--my,0)*-10px), 0) scale(1.05)" }}
+          />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/30 to-background" />
       </div>
 
       {/* Floating soft shapes */}
       <div
-        className="absolute top-24 left-10 h-40 w-40 rounded-full bg-accent/20 blur-3xl animate-float"
+        className="hero-soft-shape absolute top-24 left-10 h-40 w-40 rounded-full bg-accent/20 blur-3xl animate-float"
         style={{ transform: "translate3d(calc(var(--mx,0)*30px), calc(var(--my,0)*30px), 0)" }}
         aria-hidden
       />
       <div
-        className="absolute bottom-32 right-10 h-56 w-56 rounded-full bg-primary/10 blur-3xl animate-float"
+        className="hero-soft-shape absolute bottom-32 right-10 h-56 w-56 rounded-full bg-primary/10 blur-3xl animate-float"
         style={{ animationDelay: "1.5s", transform: "translate3d(calc(var(--mx,0)*-40px), calc(var(--my,0)*-40px), 0)" }}
         aria-hidden
       />

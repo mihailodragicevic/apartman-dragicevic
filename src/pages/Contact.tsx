@@ -1,18 +1,17 @@
-import { useEffect } from "react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
 import { SITE } from "@/lib/site";
 import { Phone, Mail, MapPin, LogIn, LogOut } from "lucide-react";
+import Seo from "@/components/Seo";
+import { baseSchemas, pageSeo } from "@/lib/seo";
 
 export default function Contact() {
-  useEffect(() => {
-    document.title = "Kontakt · Apartman Dragićević";
-  }, []);
-
   return (
     <Layout>
+      <Seo {...pageSeo.contact} schema={baseSchemas} />
       <section className="container pb-12 pt-36">
         <SectionHeading
+          as="h1"
           eyebrow="Kontakt"
           title={<>Pozovite za <em className="italic text-accent">rezervaciju</em></>}
           subtitle="Najbrži način - jedan poziv. Tu smo svakog dana, spremni da odgovorimo na sva vaša pitanja."
@@ -50,7 +49,7 @@ export default function Contact() {
           <a
             href={SITE.mapsUrl}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="flex items-center gap-5 rounded-3xl border border-border bg-card p-7 transition-colors hover:bg-secondary"
           >
             <span className="grid h-14 w-14 place-items-center rounded-2xl bg-accent-soft text-accent">

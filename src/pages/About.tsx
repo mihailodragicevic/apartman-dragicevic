@@ -1,9 +1,10 @@
-import { useEffect } from "react";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
 import { SITE } from "@/lib/site";
 import { Phone, Heart, Home, Sparkles } from "lucide-react";
-import yard from "@/assets/yard.jpg";
+import { pageSeo, baseSchemas } from "@/lib/seo";
+import Seo from "@/components/Seo";
+import yard from "@/assets/yard.webp";
 
 const values = [
   { icon: Heart, title: "Gostoljubivost", text: "Dočekujemo vas kao prijatelje, ne kao goste." },
@@ -12,11 +13,12 @@ const values = [
 ];
 
 export default function About() {
-  useEffect(() => { document.title = "O nama · Apartman Dragićević"; }, []);
   return (
     <Layout>
+      <Seo {...pageSeo.about} schema={baseSchemas} />
       <section className="container pt-36 pb-16">
         <SectionHeading
+          as="h1"
           eyebrow="O nama"
           title={<>Mali apartman, <em className="italic text-accent">veliko srce</em></>}
           subtitle="Naša priča počinje željom da svakom gostu pružimo iskustvo koje ne zaboravlja - onaj osećaj kada se vrata otvore, a vi znate da ste na pravom mestu."
@@ -25,8 +27,14 @@ export default function About() {
 
       <section className="container grid lg:grid-cols-2 gap-14 items-center pb-24">
         <div className="reveal">
-          <img src={yard} alt="Dvorište apartmana" loading="lazy" width={1280} height={896}
-            className="rounded-3xl shadow-soft w-full object-cover aspect-[4/3]" />
+          <img
+            src={yard}
+            alt="Dvorište apartmana u Bogatiću"
+            loading="lazy"
+            width={1205}
+            height={1600}
+            className="rounded-3xl shadow-soft w-full object-cover aspect-[4/3]"
+          />
         </div>
         <div className="reveal space-y-5 text-lg text-foreground/85 leading-relaxed">
           <p>

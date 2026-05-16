@@ -7,12 +7,12 @@ import { useReveal } from "@/hooks/useReveal";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior }); }, [pathname]);
+  useEffect(() => { window.scrollTo({ top: 0, behavior: "auto" }); }, [pathname]);
   useReveal();
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pb-24 md:pb-0">{children}</main>
       <Footer />
       <StickyCall />
     </div>

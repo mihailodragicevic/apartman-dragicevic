@@ -5,8 +5,8 @@ export default function PriceSection() {
   return (
     <section className="container py-24">
       <div className="reveal relative overflow-hidden rounded-3xl border border-border bg-gradient-warm p-10 text-center md:p-16">
-        <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-accent/15 blur-3xl" aria-hidden />
-        <div className="absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-primary/10 blur-3xl" aria-hidden />
+        <div className="ambient-blob absolute -top-20 -right-20 h-64 w-64 rounded-full bg-accent/15 blur-3xl" aria-hidden />
+        <div className="ambient-blob absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-primary/10 blur-3xl" aria-hidden />
         <div className="relative">
           <div className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">Cenovnik</div>
           <h2 className="mt-3 font-display text-4xl md:text-6xl">
