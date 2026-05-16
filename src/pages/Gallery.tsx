@@ -27,7 +27,7 @@ export default function Gallery() {
         <SectionHeading
           eyebrow="Galerija"
           title={<>Svaki ćošak ima svoju <em className="italic text-accent">priču</em></>}
-          subtitle="Pogledajte kako apartman izgleda — od dnevnog boravka, preko kuhinje, do mirnog dvorišta."
+          subtitle="Pogledajte kako apartman izgleda - od dnevnog boravka, preko kuhinje, do mirnog dvorišta."
         />
       </section>
 

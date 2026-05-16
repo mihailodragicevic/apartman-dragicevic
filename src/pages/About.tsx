@@ -19,7 +19,7 @@ export default function About() {
         <SectionHeading
           eyebrow="O nama"
           title={<>Mali apartman, <em className="italic text-accent">veliko srce</em></>}
-          subtitle="Naša priča počinje željom da svakom gostu pružimo iskustvo koje ne zaboravlja — onaj osećaj kada se vrata otvore, a vi znate da ste na pravom mestu."
+          subtitle="Naša priča počinje željom da svakom gostu pružimo iskustvo koje ne zaboravlja - onaj osećaj kada se vrata otvore, a vi znate da ste na pravom mestu."
         />
       </section>
 
@@ -31,14 +31,14 @@ export default function About() {
         <div className="reveal space-y-5 text-lg text-foreground/85 leading-relaxed">
           <p>
             Apartman Dragićević nalazi se u srcu Bogatića, na samo 100m od centra. Kreirali smo
-            prostor u kome ćete se osećati kao kod kuće — od trenutka kada uđete pa sve do polaska.
+            prostor u kome ćete se osećati kao kod kuće - od trenutka kada uđete pa sve do polaska.
           </p>
           <p>
             Verujemo da pravu razliku čine sitnice. Topla šolja kafe ujutru, sveže voće na stolu,
             čista posteljina sa mirisom doma i osmeh domaćina koji uvek ima vremena za vas.
           </p>
           <p>
-            Bilo da putujete poslovno, dolazite kod porodice ili istražujete Mačvu —
+            Bilo da putujete poslovno, dolazite kod porodice ili istražujete Mačvu -
             naš stan je vaše utočište. Tiho, udobno i pažljivo opremljeno.
           </p>
         </div>
@@ -64,7 +64,7 @@ export default function About() {
           <h3 className="font-display text-3xl md:text-4xl">Spremni smo za vaš dolazak</h3>
           <p className="mt-3 text-muted-foreground">Pozovite nas i rezervišite svoj termin.</p>
           <a href={SITE.phoneHref}
-            className="mt-6 inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-7 py-4 rounded-full font-semibold shadow-glow">
+            className="cta-grow-button mt-6 inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-7 py-4 rounded-full font-semibold">
             <Phone className="h-5 w-5" /> {SITE.phone}
           </a>
         </div>

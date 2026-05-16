@@ -13,7 +13,7 @@ export default function Amenities() {
         <SectionHeading
           eyebrow="Sadržaj"
           title={<>Sve pogodnosti pod <em className="italic text-accent">jednim krovom</em></>}
-          subtitle="Apartman je opremljen tako da imate sve što vam je potrebno za udoban boravak — bez kompromisa."
+          subtitle="Apartman je opremljen tako da imate sve što vam je potrebno za udoban boravak - bez kompromisa."
         />
       </section>
 
@@ -35,10 +35,10 @@ export default function Amenities() {
         <div className="reveal flex flex-col md:flex-row md:items-center justify-between gap-6 bg-secondary/60 border border-border rounded-3xl p-8 md:p-10">
           <div>
             <div className="font-display text-2xl md:text-3xl">Imate posebnu želju?</div>
-            <p className="text-muted-foreground mt-1">Slobodno nas pitajte — trudimo se da izađemo u susret.</p>
+            <p className="text-muted-foreground mt-1">Slobodno nas pitajte - trudimo se da izađemo u susret.</p>
           </div>
           <a href={SITE.phoneHref}
-            className="inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-6 py-3.5 rounded-full font-semibold shadow-card whitespace-nowrap">
+            className="cta-grow-button inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-6 py-3.5 rounded-full font-semibold whitespace-nowrap">
             <Phone className="h-4 w-4" /> Pozovite odmah
           </a>
         </div>

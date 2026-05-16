@@ -9,8 +9,8 @@ export default function GalleryPreview() {
     <section className="container py-24">
       <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
         <SectionHeading eyebrow="Galerija" title={<>Pogled u <em className="italic text-accent">prostor</em></>} />
-        <Link to="/galerija" className="reveal inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all">
-          Cela galerija <ArrowRight className="h-4 w-4" />
+        <Link to="/galerija" className="gallery-link reveal inline-flex items-center gap-2 text-accent font-medium">
+          Cela galerija <ArrowRight className="gallery-link-arrow h-4 w-4" />
         </Link>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">

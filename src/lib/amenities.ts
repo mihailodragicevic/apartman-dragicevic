@@ -17,5 +17,4 @@ export const amenities = [
   { icon: BedDouble, label: "Do 5 osoba" },
   { icon: Utensils, label: "Opremljena kuhinja" },
   { icon: ShowerHead, label: "Moderno kupatilo" },
-  { icon: Flame, label: "Centralno grejanje" },
 ];

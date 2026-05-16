@@ -14,7 +14,7 @@ const preferredOrder = [
   "hero-apartment.jpg",
   "living.jpg",
   "bedroom.jpg",
-  "bedroom2.jpg",
+  "kupatilo-narandzasto.jpg",
   "kitchen.jpg",
   "bathroom.jpg",
   "dining.jpg",

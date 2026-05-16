@@ -48,9 +48,9 @@ export default function Navbar() {
               end={l.to === "/"}
               className={({ isActive }) =>
                 cn(
-                  "px-4 py-2 rounded-full text-sm font-medium transition-colors",
+                  "nav-underline-link px-4 py-2 rounded-full text-sm font-medium transition-colors",
                   isActive
-                    ? "text-foreground bg-secondary"
+                    ? "nav-underline-link-active text-foreground"
                     : "text-muted-foreground hover:text-foreground"
                 )
               }

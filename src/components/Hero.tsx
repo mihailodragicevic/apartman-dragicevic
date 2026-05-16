@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { Phone, MapPin } from "lucide-react";
 import heroImg from "@/assets/hero-apartment.jpg";
 import { SITE } from "@/lib/site";
+import TypingText from "./TypingText";
 
 export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -58,21 +59,25 @@ export default function Hero() {
             Pavla Orlovića 11 · 100m od centra Bogatića
           </div>
           <h1 className="mt-6 font-display text-5xl md:text-7xl leading-[1.05] text-balance animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-            Apartman u Bogatiću gde se osećate <em className="italic text-accent">kao kod kuće</em>
+            Apartman u Bogatiću gde se osećate{" "}
+            <TypingText
+              text="kao kod kuće"
+              className="italic text-accent"
+            />
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl text-balance animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-            Savršeno opremljen stan na samo 100m od centra. Mir, udobnost i sve što vam treba — spremno za vaš dolazak.
+            Savršeno opremljen stan na samo 100m od centra. Mir, udobnost i sve što vam treba - spremno za vaš dolazak.
           </p>
           <div className="mt-8 flex flex-wrap gap-3 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
             <a
               href={SITE.phoneHref}
-              className="inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-7 py-4 rounded-full font-semibold shadow-glow hover:-translate-y-0.5 transition-transform"
+              className="hero-call-button inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-7 py-4 rounded-full font-semibold shadow-glow hover:-translate-y-0.5 transition-transform"
             >
-              <Phone className="h-5 w-5" /> Pozovite odmah
+              <Phone className="hero-call-icon h-5 w-5" /> Pozovite odmah
             </a>
             <a
               href="#detalji"
-              className="inline-flex items-center gap-2 bg-card border border-border px-7 py-4 rounded-full font-medium hover:bg-secondary transition-colors"
+              className="hero-secondary-button inline-flex items-center gap-2 bg-card border border-border px-7 py-4 rounded-full font-medium"
             >
               Saznajte više
             </a>

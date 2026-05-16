@@ -4,7 +4,7 @@ import { Check } from "lucide-react";
 
 const details = [
   "Aparat za kafu + više vrsta kafe",
-  "Voće, sokovi i mleko za dobrodošlicu",
+  "Voće, sokovi i mleko za kafu",
   "Higijenski setovi i čisti peškiri",
   "Pegla, fen i veš mašina",
   "Posteljina visokog kvaliteta",
@@ -26,7 +26,7 @@ export default function WhyUs() {
           />
           <div className="absolute -bottom-6 -right-4 md:-right-8 bg-card border border-border rounded-2xl px-5 py-4 shadow-card max-w-[14rem]">
             <div className="text-xs text-muted-foreground">Ocena gostiju</div>
-            <div className="font-display text-2xl">4.9 / 5.0</div>
+            <div className="font-display text-2xl">5.0 / 5.0</div>
             <div className="text-xs text-accent">★★★★★</div>
           </div>
         </div>
