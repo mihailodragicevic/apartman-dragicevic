@@ -1,7 +1,7 @@
 export const SITE = {
   name: "Apartman Dragićević",
   tagline: "Stan na dan - Bogatić",
-  siteUrl: "https://your-domain.example",
+  siteUrl: "https://apartmandragicevic.com",
   locale: "sr_RS",
   htmlLang: "sr-Latn-RS",
   themeColor: "#cd7442",

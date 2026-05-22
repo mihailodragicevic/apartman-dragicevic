@@ -4,7 +4,7 @@ import sharp from "sharp";
 import toIco from "to-ico";
 
 const publicDir = path.resolve("public");
-const logoPath = path.join(publicDir, "brand", "logo.svg");
+const logoPath = path.join(publicDir, "favicon.svg");
 
 const iconFiles = [
   { size: 16, name: "favicon-16x16.png" },

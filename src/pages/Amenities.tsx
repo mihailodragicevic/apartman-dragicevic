@@ -15,7 +15,7 @@ export default function Amenities() {
           as="h1"
           eyebrow="Sadržaj"
           title={<>Sve pogodnosti pod <em className="italic text-accent">jednim krovom</em></>}
-          subtitle="Apartman je opremljen tako da imate sve što vam je potrebno za udoban boravak - bez kompromisa."
+          subtitle="Apartman je opremljen tako da imate sve što vam je potrebno za udoban boravak -   bez kompromisa."
         />
       </section>
 
