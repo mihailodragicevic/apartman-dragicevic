@@ -207,6 +207,16 @@
   contain: paint;
 }
 
+.testimonial-stage-card {
+  transform-origin: center center;
+  will-change: transform, opacity, filter;
+  transition:
+    transform 420ms var(--transition-smooth),
+    opacity 420ms var(--transition-smooth),
+    filter 420ms var(--transition-smooth),
+    box-shadow 420ms var(--transition-smooth);
+}
+
 @keyframes typing-cursor-blink {
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
@@ -244,6 +254,10 @@
   .nav-underline-link:hover::after {
     width: calc(100% - 2rem);
   }
+
+  .testimonial-stage-card:hover {
+    box-shadow: 0 20px 46px -28px hsl(var(--accent) / 0.22);
+  }
 }
 
 @media (max-width: 767px) {
@@ -263,6 +277,13 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .testimonial-stage-card {
+    transition: none;
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
   }
 
   .animate-float,

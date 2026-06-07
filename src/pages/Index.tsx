@@ -4,6 +4,7 @@ import Features from "@/components/Features";
 import WhyUs from "@/components/WhyUs";
 import PriceSection from "@/components/PriceSection";
 import GalleryPreview from "@/components/GalleryPreview";
+import GuestTestimonials from "@/components/GuestTestimonials";
 import ReviewSection from "@/components/ReviewSection";
 import Seo from "@/components/Seo";
 import { heroImage } from "@/lib/media";
@@ -26,6 +27,7 @@ export default function Index() {
       <WhyUs />
       <PriceSection />
       <GalleryPreview />
+      <GuestTestimonials />
       <ReviewSection />
     </Layout>
   );

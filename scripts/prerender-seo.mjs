@@ -9,7 +9,7 @@ const pages = [
     path: "/",
     title: "Apartman Dragićević | Stan na dan u Bogatiću",
     description:
-      "Apartman u Bogatiću na samo 100m od centra. Smeštaj za do 5 osoba sa parkingom, WiFi internetom, klimom i domaćinskim pristupom.",
+      "Apartman u Bogatiću na samo 100m od centra. Smeštaj za do 4 osobe sa parkingom, WiFi internetom, klimom i domaćinskim pristupom.",
   },
   {
     path: "/o-nama",

@@ -2,7 +2,7 @@ import { Users, Car, Wifi, Wind, Home } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 
 const items = [
-  { icon: Users, title: "Do 5 osoba", text: "Idealno za porodicu ili manje društvo." },
+  { icon: Users, title: "Do 4 osobe", text: "Idealno za porodicu ili manje društvo." },
   { icon: Car, title: "Besplatan parking", text: "Sigurno parking mesto ispred apartmana." },
   { icon: Wifi, title: "WiFi + Smart TV", text: "Brz internet i sve omiljene aplikacije." },
   { icon: Wind, title: "Klima", text: "Prijatna temperatura tokom cele godine." },

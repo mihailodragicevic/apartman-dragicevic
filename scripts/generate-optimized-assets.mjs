@@ -216,7 +216,7 @@ function createOgOverlaySvg() {
       <text x="100" y="99" fill="${brand.foreground}" font-size="20" font-family="Inter, Arial, sans-serif" font-weight="700">Stan na dan · Bogatić</text>
       <text x="70" y="214" fill="#ffffff" font-size="76" font-family="Fraunces, Georgia, serif" font-weight="600">${brand.name}</text>
       <text x="70" y="288" fill="#ffffff" font-size="34" font-family="Inter, Arial, sans-serif" font-weight="500">${brand.tagline}</text>
-      <text x="70" y="352" fill="${brand.accentSoft}" font-size="28" font-family="Inter, Arial, sans-serif">100m od centra · Do 5 osoba · WiFi · Parking · Klima</text>
+      <text x="70" y="352" fill="${brand.accentSoft}" font-size="28" font-family="Inter, Arial, sans-serif">100m od centra · Do 4 osobe · WiFi · Parking · Klima</text>
       <rect x="70" y="430" width="410" height="4" rx="2" fill="${brand.accent}"/>
       <text x="70" y="490" fill="#ffffff" font-size="26" font-family="Inter, Arial, sans-serif">Rezervacije i direktan kontakt bez posrednika</text>
     </svg>
