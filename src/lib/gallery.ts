@@ -1,6 +1,11 @@
 import living from "@/assets/living.webp";
 import bedroom from "@/assets/bedroom.webp";
 import bedroom2 from "@/assets/bedroom2.webp";
+import spavaca1 from "@/assets/spavaca1.webp";
+import spavaca2 from "@/assets/spavaca2.webp";
+import spavaca3 from "@/assets/spavaca3.webp";
+import spavaca4 from "@/assets/spavaca4.webp";
+import spavaca5 from "@/assets/spavaca5.webp";
 import kupatiloNarandzasto from "@/assets/kupatilo-narandzasto.webp";
 import kitchen from "@/assets/kitchen.webp";
 import bathroom from "@/assets/bathroom.webp";
@@ -25,6 +30,11 @@ export type GalleryItem = {
 export const gallery: GalleryItem[] = [
   { src: living, alt: "Apartman Dragićević - dnevni boravak", w: 1205, h: 1600 },
   { src: bedroom, alt: "Apartman Dragićević - spavaća soba", w: 1200, h: 1600 },
+  { src: spavaca1, alt: "Apartman Dragićević - spavaća soba detalj 1", w: 1200, h: 1600 },
+  { src: spavaca2, alt: "Apartman Dragićević - spavaća soba detalj 2", w: 1200, h: 1600 },
+  { src: spavaca3, alt: "Apartman Dragićević - spavaća soba detalj 3", w: 1200, h: 1600 },
+  { src: spavaca4, alt: "Apartman Dragićević - spavaća soba detalj 4", w: 1200, h: 1600 },
+  { src: spavaca5, alt: "Apartman Dragićević - spavaća soba detalj 5", w: 1200, h: 1600 },
   { src: kupatiloNarandzasto, alt: "Apartman Dragićević - moderno kupatilo", w: 4000, h: 2250 },
   { src: kitchen, alt: "Apartman Dragićević - opremljena kuhinja", w: 1024, h: 768 },
   { src: bathroom, alt: "Apartman Dragićević - detalj kupatila", w: 4000, h: 2250 },

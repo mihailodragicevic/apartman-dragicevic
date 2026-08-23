@@ -3,8 +3,15 @@ import { ArrowRight } from "lucide-react";
 import { gallery } from "@/lib/gallery";
 import SectionHeading from "./SectionHeading";
 
+const previewImages = [
+  gallery.find((item) => item.alt.includes("spavaća soba detalj 1")) ?? gallery[0],
+  gallery.find((item) => item.alt.includes("enterijer apartmana 5")) ?? gallery[1],
+  gallery.find((item) => item.alt.includes("kutak za kafu")) ?? gallery[2],
+  gallery.find((item) => item.alt.includes("dnevni boravak")) ?? gallery[3],
+];
+
 export default function GalleryPreview() {
-  const items = gallery.slice(1, 5);
+  const items = previewImages;
   return (
     <section className="container py-24">
       <div className="flex flex-wrap items-end justify-between gap-6 mb-10">

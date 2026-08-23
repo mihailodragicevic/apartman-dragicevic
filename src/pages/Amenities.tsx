@@ -29,9 +29,17 @@ const sections = [
     tone: "soft" as const,
   },
   {
-    title: "Sve sto ne morate da nosite sa sobom",
+    title: (
+      <>
+        Sve sto <span className="font-display text-accent italic">ne morate</span> da nosite sa sobom
+      </>
+    ),
     lead:
-      "Najlepse je kada stignete i ne morate da razmisljate sta fali. Sitnice koje obicno zatrebaju vec cekaju svoje mesto.",
+      (
+        <>
+          Najlepse je kada stignete i <span className="font-display text-accent italic">ne morate</span> da razmisljate sta fali. Sitnice koje obicno zatrebaju vec cekaju svoje mesto.
+        </>
+      ),
     image: bathroom,
     imageAlt: "Kupatilo apartmana Dragicevic",
     labels: [
@@ -40,8 +48,6 @@ const sections = [
       "Ves masina",
       "Pegla i daska",
       "Fen za kosu",
-      "Moderno kupatilo",
-      "Besplatan parking",
     ],
     tone: "clean" as const,
   },
