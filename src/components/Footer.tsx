@@ -55,7 +55,17 @@ export default function Footer() {
       <div className="border-t border-border">
         <div className="container flex flex-col gap-2 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <div>© 2026 Apartman Dragićević · Bogatić</div>
-          <div>Made by Mihailo Dragićević</div>
+          <div>
+            Made by{" "}
+            <a
+              href="https://mihailodev.com/sr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-accent"
+            >
+              Mihailo Dragićević
+            </a>
+          </div>
         </div>
       </div>
     </footer>
