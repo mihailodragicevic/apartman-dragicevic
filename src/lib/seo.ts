@@ -37,15 +37,7 @@ const localBusinessSchema = {
   sameAs: [SITE.instagramUrl],
 };
 
-const webSiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: SITE.name,
-  url: buildAbsoluteUrl("/"),
-  inLanguage: SITE.htmlLang,
-};
-
-export const baseSchemas = [organizationSchema, localBusinessSchema, webSiteSchema];
+export const baseSchemas = [organizationSchema, localBusinessSchema];
 
 type PageSeoConfig = {
   title: string;
