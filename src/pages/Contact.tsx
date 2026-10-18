@@ -16,9 +16,9 @@ type PopupState = {
   details?: string[];
 };
 
-const FIELD_CLASS = "flex h-11 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+const FIELD_CLASS = "flex h-11 w-full rounded-xl border border-input bg-background px-3 py-2 text-base sm:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 const FIELD_ERROR_CLASS = "border-red-400 bg-red-50 focus-visible:ring-red-400";
-const TEXTAREA_CLASS = "w-full resize-y rounded-xl border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+const TEXTAREA_CLASS = "w-full resize-y rounded-xl border border-input bg-background px-3 py-2 text-base sm:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 function ViberMark() {
   return <img src="/brand/viber-logo.svg" alt="Viber" className="h-7 w-7 object-contain" />;
@@ -140,7 +140,7 @@ export default function Contact() {
             <span className="grid h-14 w-14 place-items-center rounded-2xl bg-accent-foreground/15">
               <Phone className="h-6 w-6" />
             </span>
-            <span>
+            <span className="min-w-0">
               <div className="text-sm opacity-90">Pozovite odmah</div>
               <div className="font-display text-2xl md:text-3xl">{SITE.phone}</div>
             </span>
@@ -184,9 +184,9 @@ export default function Contact() {
             <span className="grid h-14 w-14 place-items-center rounded-2xl bg-accent-soft text-accent">
               <Mail className="h-6 w-6" />
             </span>
-            <span>
+              <span className="min-w-0">
               <div className="text-sm text-muted-foreground">Email</div>
-              <div className="font-display text-xl">{SITE.email}</div>
+                <div className="break-all font-display text-xl">{SITE.email}</div>
             </span>
           </a>
 
@@ -199,7 +199,7 @@ export default function Contact() {
             <span className="grid h-14 w-14 place-items-center rounded-2xl bg-accent-soft text-accent">
               <MapPin className="h-6 w-6" />
             </span>
-            <span>
+              <span className="min-w-0">
               <div className="text-sm text-muted-foreground">Adresa</div>
               <div className="font-display text-xl">{SITE.address}</div>
             </span>
