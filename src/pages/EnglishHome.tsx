@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import FaqSection from "@/components/FaqSection";
 import Layout from "@/components/Layout";
 import Seo from "@/components/Seo";
 import geoContent from "@/geo-content.json";
@@ -16,6 +17,7 @@ export default function EnglishHome() {
         schema={[]}
       />
       <Hero locale="en" />
+      <FaqSection locale="en" />
     </Layout>
   );
 }

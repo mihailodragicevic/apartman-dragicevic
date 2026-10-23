@@ -83,6 +83,23 @@ const renderHeroMarkup = (locale) => {
   </section>`;
 };
 
+const renderFaqMarkup = (locale) => {
+  const page = geoContent.locales[locale];
+  const eyebrow = locale === "sr" ? "Pitanja i odgovori" : "Questions and answers";
+  const subtitle =
+    locale === "sr"
+      ? "Odgovori na najčešća pitanja o boravku, sadržaju i rezervaciji."
+      : "Answers to common questions about the apartment, amenities and booking.";
+  const faq = page.faq
+    .map(
+      ([question, answer], index) =>
+        `<details class="faq-card reveal group rounded-2xl border border-border bg-card shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-accent/40 hover:shadow-soft open:border-accent/40 open:shadow-soft" style="transition-delay:${Math.min(index % 4, 3) * 60}ms"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 font-semibold marker:hidden md:p-6 [&amp;::-webkit-details-marker]:hidden"><span>${escapeHtml(question)}</span><span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent-soft text-accent transition-transform duration-300 group-open:rotate-45"><span aria-hidden="true">+</span></span></summary><div class="faq-answer px-5 pb-5 text-sm leading-relaxed text-muted-foreground md:px-6 md:pb-6 md:text-base">${escapeHtml(answer)}</div></details>`,
+    )
+    .join("");
+
+  return `<section id="faq" class="container py-20 md:py-24"><div class="reveal mx-auto max-w-2xl text-center"><div class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">${eyebrow}</div><h2 class="font-display text-4xl leading-tight text-balance md:text-5xl">${escapeHtml(page.sections.faq)}</h2><p class="mt-4 text-lg text-muted-foreground text-balance">${subtitle}</p></div><div class="mx-auto mt-10 grid max-w-5xl gap-4 md:mt-14 md:grid-cols-2">${faq}</div></section>`;
+};
+
 const rentalSchema = (locale) => ({
   "@context": "https://schema.org",
   "@type": "VacationRental",
@@ -152,6 +169,17 @@ const rentalSchema = (locale) => ({
     { "@type": "PropertyValue", name: "Cena za 3 osobe po noćenju", value: "7.000 RSD" },
     { "@type": "PropertyValue", name: "Cena za 4 osobe po noćenju", value: "9.000 RSD" },
   ],
+});
+
+const faqSchema = (locale) => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  inLanguage: locale,
+  mainEntity: geoContent.locales[locale].faq.map(([question, answer]) => ({
+    "@type": "Question",
+    name: question,
+    acceptedAnswer: { "@type": "Answer", text: answer },
+  })),
 });
 
 const replaceOnce = (html, pattern, replacement, label) => {
@@ -251,10 +279,12 @@ const renderPage = (template, page) => {
   );
 
   if (page.locale === "sr" && page.path === "/" || page.locale === "en") {
-    const markup = renderHeroMarkup(page.locale);
-    html = replaceOnce(html, /<div id="root"><\/div>/, `<div id="root">${markup}</div>`, "prerendered hero");
-    const schema = `<script type="application/ld+json">${JSON.stringify(rentalSchema(page.locale))}</script>`;
-    html = html.replace("</head>", `${schema}\n    </head>`);
+    const markup = `${renderHeroMarkup(page.locale)}${renderFaqMarkup(page.locale)}`;
+    html = replaceOnce(html, /<div id="root"><\/div>/, `<div id="root">${markup}</div>`, "prerendered hero and FAQ");
+    const schemas = [rentalSchema(page.locale), faqSchema(page.locale)]
+      .map((schema) => `<script type="application/ld+json">${JSON.stringify(schema)}</script>`)
+      .join("\n    ");
+    html = html.replace("</head>", `${schemas}\n    </head>`);
   }
 
   return html;

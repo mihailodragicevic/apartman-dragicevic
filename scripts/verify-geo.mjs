@@ -4,6 +4,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { JSDOM } from "jsdom";
+import geoContent from "../src/geo-content.json" with { type: "json" };
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectDir = path.resolve(scriptDir, "..");
@@ -83,7 +84,14 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
   assertThat(!hasPlaceholder(bodyText), `${prefix} visible content contains a square-bracket placeholder.`);
   assertThat(document.querySelectorAll("h1").length === 1, `${prefix} must contain exactly one H1.`);
   assertThat(document.querySelectorAll("img:not([alt]), img[alt='']").length === 0, `${prefix} contains an image with missing alt text.`);
-  assertThat(document.querySelectorAll("table, details").length === 0, `${prefix} unexpectedly contains the removed facts, prices or FAQ sections.`);
+  assertThat(document.querySelectorAll("table").length === 0, `${prefix} unexpectedly contains a facts or prices table.`);
+  assertThat(
+    document.querySelectorAll("#faq details").length === geoContent.locales[lang].faq.length,
+    `${prefix} must render every localized FAQ item as a native details disclosure.`,
+  );
+  assertThat(document.querySelector("#faq .reveal") !== null, `${prefix} FAQ section is missing its reveal animation.`);
+  assertThat(document.querySelector("#faq .hover\\:-translate-y-1") !== null, `${prefix} FAQ cards are missing their hover effect.`);
+  assertThat(document.querySelector("#faq .md\\:grid-cols-2") !== null, `${prefix} FAQ section is missing its responsive grid layout.`);
   assertThat(document.querySelectorAll("#root img").length === 1, `${prefix} should contain only the original hero image, not the added gallery.`);
   const heroHeading = normalize(document.querySelector("#root h1")?.textContent ?? "");
   const heroLead = lang === "sr"
@@ -102,7 +110,7 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
   assertThat(document.querySelector("#root .typing-text") !== null, `${prefix} animated hero text is missing.`);
 
   const schemaScripts = [...document.querySelectorAll('script[type="application/ld+json"]')];
-  assertThat(schemaScripts.length === 1, `${prefix} expected one VacationRental JSON-LD block.`);
+  assertThat(schemaScripts.length === 2, `${prefix} expected VacationRental and FAQPage JSON-LD blocks.`);
   const schemas = schemaScripts.map((script, index) => {
     try {
       const schema = JSON.parse(script.textContent ?? "");
@@ -115,7 +123,25 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
     }
   });
   const rental = schemas.find((schema) => schema["@type"] === "VacationRental");
+  const faqPage = schemas.find((schema) => schema["@type"] === "FAQPage");
   assertThat(Boolean(rental), `${prefix} is missing VacationRental JSON-LD.`);
+  assertThat(Boolean(faqPage), `${prefix} is missing FAQPage JSON-LD.`);
+  assertThat(faqPage.inLanguage === lang, `${prefix} FAQPage language must match the route.`);
+  assertThat(
+    faqPage.mainEntity.length === geoContent.locales[lang].faq.length,
+    `${prefix} FAQPage must include every visible FAQ.`,
+  );
+  for (const [[question, answer], structuredQuestion] of geoContent.locales[lang].faq.map(
+    (item, index) => [item, faqPage.mainEntity[index]],
+  )) {
+    assertThat(
+      structuredQuestion.name === question &&
+        structuredQuestion.acceptedAnswer.text === answer,
+      `${prefix} FAQ JSON-LD does not match the visible FAQ content: ${question}`,
+    );
+    assertThat(bodyText.includes(normalize(question)), `${prefix} visible FAQ question is missing: ${question}`);
+    assertThat(bodyText.includes(normalize(answer)), `${prefix} visible FAQ answer is missing: ${question}`);
+  }
 
   const additionalProperties = new Map(
     rental.additionalProperty.map((property) => [property.name, property.value]),

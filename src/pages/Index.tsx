@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout";
 import Hero from "@/components/Hero";
+import FaqSection from "@/components/FaqSection";
 import Features from "@/components/Features";
 import WhyUs from "@/components/WhyUs";
 import PriceSection from "@/components/PriceSection";
@@ -25,6 +26,7 @@ export default function Index() {
       <Hero />
       <Features />
       <WhyUs />
+      <FaqSection />
       <PriceSection />
       <GalleryPreview />
       <GuestTestimonials />

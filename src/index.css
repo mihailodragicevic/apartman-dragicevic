@@ -85,7 +85,17 @@
     will-change: transform, opacity;
   }
   .reveal.is-visible { opacity: 1; transform: translateY(0); }
-}
+  @keyframes faq-answer-in {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .faq-card[open] .faq-answer {
+    animation: faq-answer-in 260ms var(--transition-smooth) both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .faq-card[open] .faq-answer { animation: none; }
+  }
+  }
 
 @keyframes fade-in-up {
   from { opacity: 0; transform: translateY(20px); }
