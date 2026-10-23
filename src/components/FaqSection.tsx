@@ -23,6 +23,7 @@ export default function FaqSection({ locale = "sr" }: { locale?: Locale }) {
         {page.faq.map(([question, answer], index) => (
           <details
             key={question}
+            name="apartment-faq"
             className="faq-card reveal group rounded-2xl border border-border bg-card shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-accent/40 hover:shadow-soft open:border-accent/40 open:shadow-soft"
             style={{ transitionDelay: `${Math.min(index % 4, 3) * 60}ms` }}
           >

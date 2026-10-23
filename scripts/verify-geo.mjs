@@ -89,6 +89,10 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
     document.querySelectorAll("#faq details").length === geoContent.locales[lang].faq.length,
     `${prefix} must render every localized FAQ item as a native details disclosure.`,
   );
+  assertThat(
+    [...document.querySelectorAll("#faq details")].every((item) => item.getAttribute("name") === "apartment-faq"),
+    `${prefix} FAQ cards must share one exclusive disclosure group.`,
+  );
   assertThat(document.querySelector("#faq .reveal") !== null, `${prefix} FAQ section is missing its reveal animation.`);
   assertThat(document.querySelector("#faq .hover\\:-translate-y-1") !== null, `${prefix} FAQ cards are missing their hover effect.`);
   assertThat(document.querySelector("#faq .md\\:grid-cols-2") !== null, `${prefix} FAQ section is missing its responsive grid layout.`);
