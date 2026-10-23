@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build && node scripts/prerender-seo.mjs",
     "build:dev": "vite build --mode development && node scripts/prerender-seo.mjs",
+    "verify:geo": "node scripts/verify-geo.mjs",
     "assets:generate": "node scripts/generate-optimized-assets.mjs",
     "assets:webp": "node scripts/convert-assets-to-webp.mjs",
     "lint": "eslint .",

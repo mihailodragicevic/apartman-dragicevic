@@ -1,8 +1,16 @@
 {
-  "rewrites": [
+  "trailingSlash": true,
+  "redirects": [
     {
-      "source": "/(.*)",
-      "destination": "/"
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.apartmandragicevic.com"
+        }
+      ],
+      "destination": "https://apartmandragicevic.com/:path*",
+      "permanent": true
     }
   ]
 }
