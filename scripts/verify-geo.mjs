@@ -213,10 +213,23 @@ const verifyPublicFiles = async () => {
   const sitemapDocument = new JSDOM(sitemap, { contentType: "application/xml" }).window.document;
   assertThat(!sitemapDocument.querySelector("parsererror"), "sitemap.xml is not valid XML.");
   const entries = [...sitemapDocument.getElementsByTagName("url")];
-  assertThat(entries.length === 2, "sitemap.xml must contain only the Serbian and English home routes.");
+  const expectedRoutes = ["/", "/en/", "/o-nama/", "/sadrzaj/", "/galerija/", "/kontakt/"];
+  assertThat(entries.length === expectedRoutes.length, "sitemap.xml must contain both language home routes and all existing site pages.");
   const locations = entries.map((entry) => entry.getElementsByTagName("loc")[0]?.textContent);
-  assertThat(locations.includes(`${siteUrl}/`) && locations.includes(`${siteUrl}/en/`), "sitemap.xml is missing a canonical language route.");
+  for (const route of expectedRoutes) {
+    assertThat(locations.includes(`${siteUrl}${route}`), `sitemap.xml is missing canonical route ${route}.`);
+    const filePath = route === "/"
+      ? path.join(distDir, "index.html")
+      : path.join(distDir, route.slice(1), "index.html");
+    try {
+      await fs.access(filePath);
+    } catch {
+      fail(`sitemap.xml lists a route without a prerendered file: ${route}`);
+    }
+  }
   for (const entry of entries) {
+    const location = entry.getElementsByTagName("loc")[0]?.textContent;
+    if (location !== `${siteUrl}/` && location !== `${siteUrl}/en/`) continue;
     const alternates = new Map(
       [...entry.getElementsByTagName("xhtml:link")].map((link) => [
         link.getAttribute("hreflang"),
