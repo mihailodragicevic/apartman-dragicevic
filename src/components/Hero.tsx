@@ -3,6 +3,7 @@ import { Phone, MapPin } from "lucide-react";
 import { SITE } from "@/lib/site";
 import { publicAssetPath } from "@/lib/publicAsset";
 import geoContent from "@/geo-content.json";
+import TypingText from "./TypingText";
 
 const heroImageSrc = publicAssetPath("/images/hero/apartman-bogatic-hero-dnevni-boravak-1600.webp");
 const heroImageSrcSet = [
@@ -81,11 +82,17 @@ export default function Hero({ locale = "sr" }: { locale?: Locale }) {
               ? "Pavla Orlovića 11 · 100 m od centra Bogatića"
               : "Pavla Orlovića 11 · 100 m from Bogatić town center"}
           </div>
-          <h1 className="mt-6 font-display text-4xl sm:text-5xl md:text-7xl leading-[1.05] text-balance animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-            {page.h1}
+          <h1 className="mt-6 font-display text-5xl md:text-7xl leading-[1.05] text-balance animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+            {locale === "sr" ? "Apartman u Bogatiću gde se osećate " : "Apartman in Bogatić where you feel "}
+            <TypingText
+              text={locale === "sr" ? "kao kod kuće" : "at home"}
+              className="italic text-accent"
+            />
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl text-balance animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-            {page.description}
+            {locale === "sr"
+              ? "Savršeno opremljen stan na samo 100m od centra. Mir, udobnost i sve što vam treba - spremno za vaš dolazak."
+              : page.description}
           </p>
           <div className="mt-8 flex flex-wrap gap-3 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
             <a

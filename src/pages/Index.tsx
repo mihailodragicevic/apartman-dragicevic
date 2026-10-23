@@ -6,7 +6,6 @@ import PriceSection from "@/components/PriceSection";
 import GalleryPreview from "@/components/GalleryPreview";
 import GuestTestimonials from "@/components/GuestTestimonials";
 import ReviewSection from "@/components/ReviewSection";
-import GeoDetails from "@/components/GeoDetails";
 import Seo from "@/components/Seo";
 import { heroImage } from "@/lib/media";
 import { pageSeo } from "@/lib/seo";
@@ -24,7 +23,6 @@ export default function Index() {
         }}
       />
       <Hero />
-      <GeoDetails locale="sr" />
       <Features />
       <WhyUs />
       <PriceSection />

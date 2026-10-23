@@ -1,4 +1,3 @@
-import GeoDetails from "@/components/GeoDetails";
 import Hero from "@/components/Hero";
 import Layout from "@/components/Layout";
 import Seo from "@/components/Seo";
@@ -17,7 +16,6 @@ export default function EnglishHome() {
         schema={[]}
       />
       <Hero locale="en" />
-      <GeoDetails locale="en" />
     </Layout>
   );
 }

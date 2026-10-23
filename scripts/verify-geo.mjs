@@ -83,9 +83,26 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
   assertThat(!hasPlaceholder(bodyText), `${prefix} visible content contains a square-bracket placeholder.`);
   assertThat(document.querySelectorAll("h1").length === 1, `${prefix} must contain exactly one H1.`);
   assertThat(document.querySelectorAll("img:not([alt]), img[alt='']").length === 0, `${prefix} contains an image with missing alt text.`);
+  assertThat(document.querySelectorAll("table, details").length === 0, `${prefix} unexpectedly contains the removed facts, prices or FAQ sections.`);
+  assertThat(document.querySelectorAll("#root img").length === 1, `${prefix} should contain only the original hero image, not the added gallery.`);
+  const heroHeading = normalize(document.querySelector("#root h1")?.textContent ?? "");
+  const heroLead = lang === "sr"
+    ? "Apartman u Bogatiću gde se osećate"
+    : "Apartman in Bogatić where you feel";
+  const heroEnding = lang === "sr" ? "kao kod kuće" : "at home";
+  assertThat(heroHeading.startsWith(heroLead) && heroHeading.includes(heroEnding), `${prefix} is missing restored hero heading copy.`);
+  if (lang === "sr") {
+    assertThat(
+      bodyText.includes("Savršeno opremljen stan na samo 100m od centra. Mir, udobnost i sve što vam treba - spremno za vaš dolazak."),
+      `${prefix} is missing the original hero introduction.`,
+    );
+  }
+  assertThat(document.querySelector("#root .animate-fade-in-up") !== null, `${prefix} hero entrance animation is missing.`);
+  assertThat(document.querySelector("#root .animate-float") !== null, `${prefix} floating hero animation is missing.`);
+  assertThat(document.querySelector("#root .typing-text") !== null, `${prefix} animated hero text is missing.`);
 
   const schemaScripts = [...document.querySelectorAll('script[type="application/ld+json"]')];
-  assertThat(schemaScripts.length === 2, `${prefix} expected one VacationRental and one FAQPage JSON-LD block.`);
+  assertThat(schemaScripts.length === 1, `${prefix} expected one VacationRental JSON-LD block.`);
   const schemas = schemaScripts.map((script, index) => {
     try {
       const schema = JSON.parse(script.textContent ?? "");
@@ -98,57 +115,11 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
     }
   });
   const rental = schemas.find((schema) => schema["@type"] === "VacationRental");
-  const faqPage = schemas.find((schema) => schema["@type"] === "FAQPage");
   assertThat(Boolean(rental), `${prefix} is missing VacationRental JSON-LD.`);
-  assertThat(Boolean(faqPage), `${prefix} is missing FAQPage JSON-LD.`);
-  assertThat(faqPage.inLanguage === lang, `${prefix} FAQPage inLanguage does not match the page.`);
-
-  for (const question of faqPage.mainEntity) {
-    assertThat(bodyText.includes(normalize(question.name)), `${prefix} FAQ question is missing from visible page text: ${question.name}`);
-    assertThat(
-      bodyText.includes(normalize(question.acceptedAnswer.text)),
-      `${prefix} FAQ answer is missing from visible page text for: ${question.name}`,
-    );
-  }
 
   const additionalProperties = new Map(
     rental.additionalProperty.map((property) => [property.name, property.value]),
   );
-  const expectedVisible = lang === "sr"
-    ? [
-        "Pavla Orlovića 11, 15350 Bogatić",
-        "100 m",
-        "450 m",
-        "21 km",
-        "89,4 km",
-        "do 4 osobe",
-        "od 14:00 / do 11:00 narednog dana",
-        "nisu dozvoljeni",
-        "dozvoljeno",
-        "3.000 RSD",
-        "5.200 RSD",
-        "7.000 RSD",
-        "9.000 RSD",
-      ]
-    : [
-        "Pavla Orlovića 11, 15350 Bogatić",
-        "100 m",
-        "450 m",
-        "21 km",
-        "89.4 km",
-        "up to 4 guests",
-        "from 2:00 PM / until 11:00 AM the next day",
-        "not allowed",
-        "allowed",
-        "3,000 RSD",
-        "5,200 RSD",
-        "7,000 RSD",
-        "9,000 RSD",
-      ];
-  for (const fact of expectedVisible) {
-    assertThat(bodyText.includes(fact), `${prefix} visible content is missing required fact: ${fact}`);
-  }
-
   const serializedRental = JSON.stringify(rental);
   for (const fact of [
     "Pavla Orlovića 11",

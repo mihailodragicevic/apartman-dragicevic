@@ -57,57 +57,30 @@ const escapeHtml = (value) =>
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
 
-const renderTableRows = (rows) =>
-  rows
-    .map(
-      ([label, value]) =>
-        `<tr class="border-b border-border last:border-0"><th scope="row" class="w-1/3 py-3 pr-5 font-semibold">${escapeHtml(label)}</th><td class="py-3 text-muted-foreground">${escapeHtml(value)}</td></tr>`,
-    )
-    .join("");
-
-const renderGeoMarkup = (locale) => {
+const renderHeroMarkup = (locale) => {
   const page = geoContent.locales[locale];
   const hero = geoContent.images[0];
-  const intro = page.intro
-    .map((paragraph) => `<p class="mt-4 text-lg leading-relaxed text-muted-foreground">${escapeHtml(paragraph)}</p>`)
-    .join("");
-  const photos = geoContent.images
-    .map(
-      (image, index) =>
-        `<img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt[locale])}" class="aspect-[4/3] w-full rounded-2xl object-cover" width="800" height="600"${index === 0 ? "" : ' loading="lazy"'}>`,
-    )
-    .join("");
-  const prices = page.prices
-    .map(
-      ([guests, price]) =>
-        `<tr class="border-b border-border last:border-0"><td class="py-3 pr-5">${escapeHtml(guests)}</td><td class="py-3 font-semibold">${escapeHtml(price)}</td></tr>`,
-    )
-    .join("");
-  const faq = page.faq
-    .map(
-      ([question, answer]) =>
-        `<details class="rounded-2xl border border-border bg-card px-5 py-4"><summary class="cursor-pointer font-semibold">${escapeHtml(question)}</summary><p class="pt-3 leading-relaxed text-muted-foreground">${escapeHtml(answer)}</p></details>`,
-    )
-    .join("");
+  const lead =
+    locale === "sr"
+      ? "Apartman u Bogatiću gde se osećate "
+      : "Apartman in Bogatić where you feel ";
+  const typedText = locale === "sr" ? "kao kod kuće" : "at home";
+  const description =
+    locale === "sr"
+      ? "Savršeno opremljen stan na samo 100m od centra. Mir, udobnost i sve što vam treba - spremno za vaš dolazak."
+      : page.description;
 
-  return `<div class="min-h-screen flex flex-col"><main class="flex-1 pb-24">
-    <section class="relative min-h-[100svh] flex items-center overflow-hidden">
-      <div class="absolute inset-0"><img src="${escapeHtml(hero.src)}" alt="${escapeHtml(hero.alt[locale])}" class="h-full w-full object-cover" width="1920" height="1080"><div class="absolute inset-0 bg-gradient-to-b from-background/40 via-background/30 to-background"></div></div>
-      <div class="container relative z-10 pt-32 pb-20"><div class="max-w-3xl">
-        <div class="inline-flex items-center gap-2 bg-card/80 backdrop-blur px-4 py-1.5 rounded-full text-xs font-medium text-muted-foreground border border-border">${locale === "sr" ? "Pavla Orlovića 11 · 100 m od centra Bogatića" : "Pavla Orlovića 11 · 100 m from Bogatić town center"}</div>
-        <h1 class="mt-6 font-display text-5xl md:text-7xl leading-[1.05] text-balance">${escapeHtml(page.h1)}</h1>
-        <p class="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl text-balance">${escapeHtml(page.description)}</p>
-        <a href="tel:+381658103247" class="mt-8 inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-7 py-4 rounded-full font-semibold">${locale === "sr" ? "Pozovite odmah" : "Call now"}</a>
-      </div></div>
-    </section>
-    <section id="detalji" class="container space-y-12 py-16 md:py-24">
-      <div class="mx-auto max-w-4xl text-center">${intro}</div>
-      <section class="rounded-3xl border border-border bg-card p-6 shadow-card md:p-10"><h2 class="mb-6 font-display text-3xl md:text-4xl">${escapeHtml(page.sections.facts)}</h2><div class="overflow-x-auto"><table class="w-full border-collapse text-left"><tbody>${renderTableRows(page.facts)}</tbody></table></div></section>
-      <section class="rounded-3xl bg-gradient-warm p-6 md:p-10"><h2 class="font-display text-3xl md:text-4xl">${escapeHtml(page.sections.prices)}</h2><p class="mt-3 max-w-3xl text-muted-foreground">${escapeHtml(page.sections.priceNote)}</p><div class="mt-6 overflow-x-auto"><table class="w-full max-w-xl border-collapse text-left"><thead><tr class="border-b border-border"><th scope="col" class="py-3 pr-5">${escapeHtml(page.sections.guests)}</th><th scope="col" class="py-3">${escapeHtml(page.sections.pricePerNight)}</th></tr></thead><tbody>${prices}</tbody></table></div></section>
-      <section><h2 class="mb-6 font-display text-3xl md:text-4xl">${escapeHtml(page.sections.photos)}</h2><div class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">${photos}</div></section>
-      <section><h2 class="mb-6 font-display text-3xl md:text-4xl">${escapeHtml(page.sections.faq)}</h2><div class="space-y-3">${faq}</div></section>
-    </section>
-  </main></div>`;
+  return `<section class="relative min-h-[100svh] flex items-center overflow-hidden">
+    <div class="absolute inset-0"><picture class="block h-full w-full"><source srcset="${escapeHtml(hero.src)}" sizes="100vw" type="image/webp"><img src="${escapeHtml(hero.src)}" srcset="${escapeHtml(hero.src)}" sizes="100vw" alt="${escapeHtml(hero.alt[locale])}" class="h-full w-full object-cover" width="1920" height="1080" fetchpriority="high" style="transform:translate3d(calc(var(--mx,0)*-10px),calc(var(--my,0)*-10px),0) scale(1.05)"></picture><div class="absolute inset-0 bg-gradient-to-b from-background/40 via-background/30 to-background"></div></div>
+    <div class="hero-soft-shape absolute top-24 left-10 h-40 w-40 rounded-full bg-accent/20 blur-3xl animate-float" style="transform:translate3d(calc(var(--mx,0)*30px),calc(var(--my,0)*30px),0)" aria-hidden="true"></div>
+    <div class="hero-soft-shape absolute bottom-32 right-10 h-56 w-56 rounded-full bg-primary/10 blur-3xl animate-float" style="animation-delay:1.5s;transform:translate3d(calc(var(--mx,0)*-40px),calc(var(--my,0)*-40px),0)" aria-hidden="true"></div>
+    <div class="container relative z-10 pt-32 pb-20"><div class="max-w-3xl">
+      <div class="inline-flex items-center gap-2 bg-card/80 backdrop-blur px-4 py-1.5 rounded-full text-xs font-medium text-muted-foreground border border-border animate-fade-in-up">${locale === "sr" ? "Pavla Orlovića 11 · 100m od centra Bogatića" : "Pavla Orlovića 11 · 100 m from Bogatić town center"}</div>
+      <h1 class="mt-6 font-display text-5xl md:text-7xl leading-[1.05] text-balance animate-fade-in-up" style="animation-delay:0.1s">${escapeHtml(lead)}<span class="typing-text italic text-accent"><span class="typing-text-ghost" aria-hidden="true">${escapeHtml(typedText)}</span><span class="typing-text-live" aria-label="${escapeHtml(typedText)}">${escapeHtml(typedText)}<span class="typing-text-cursor" aria-hidden="true"></span></span></span></h1>
+      <p class="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl text-balance animate-fade-in-up" style="animation-delay:0.2s">${escapeHtml(description)}</p>
+      <div class="mt-8 flex flex-wrap gap-3 animate-fade-in-up" style="animation-delay:0.3s"><a href="tel:+381658103247" class="hero-call-button inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-7 py-4 rounded-full font-semibold shadow-glow hover:-translate-y-0.5 transition-transform">${locale === "sr" ? "Pozovite odmah" : "Call now"}</a><a href="#detalji" class="hero-secondary-button inline-flex items-center gap-2 bg-card border border-border px-7 py-4 rounded-full font-medium">${locale === "sr" ? "Saznajte više" : "Learn more"}</a></div>
+    </div></div>
+  </section>`;
 };
 
 const rentalSchema = (locale) => ({
@@ -179,17 +152,6 @@ const rentalSchema = (locale) => ({
     { "@type": "PropertyValue", name: "Cena za 3 osobe po noćenju", value: "7.000 RSD" },
     { "@type": "PropertyValue", name: "Cena za 4 osobe po noćenju", value: "9.000 RSD" },
   ],
-});
-
-const faqSchema = (locale) => ({
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  inLanguage: locale,
-  mainEntity: geoContent.locales[locale].faq.map(([question, answer]) => ({
-    "@type": "Question",
-    name: question,
-    acceptedAnswer: { "@type": "Answer", text: answer },
-  })),
 });
 
 const replaceOnce = (html, pattern, replacement, label) => {
@@ -289,12 +251,10 @@ const renderPage = (template, page) => {
   );
 
   if (page.locale === "sr" && page.path === "/" || page.locale === "en") {
-    const markup = renderGeoMarkup(page.locale);
-    html = replaceOnce(html, /<div id="root"><\/div>/, `<div id="root">${markup}</div>`, "prerendered page content");
-    const schemas = [rentalSchema(page.locale), faqSchema(page.locale)]
-      .map((schema) => `<script type="application/ld+json">${JSON.stringify(schema)}</script>`)
-      .join("\n    ");
-    html = html.replace("</head>", `${schemas}\n    </head>`);
+    const markup = renderHeroMarkup(page.locale);
+    html = replaceOnce(html, /<div id="root"><\/div>/, `<div id="root">${markup}</div>`, "prerendered hero");
+    const schema = `<script type="application/ld+json">${JSON.stringify(rentalSchema(page.locale))}</script>`;
+    html = html.replace("</head>", `${schema}\n    </head>`);
   }
 
   return html;
