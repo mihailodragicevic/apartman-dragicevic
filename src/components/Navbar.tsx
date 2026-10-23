@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import { Phone, Menu, X } from "lucide-react";
 import logo from "@/assets/Logo_WEB 3.svg";
 import { SITE } from "@/lib/site";
@@ -14,6 +14,8 @@ const links = [
 ];
 
 export default function Navbar() {
+  const { pathname } = useLocation();
+  const isEnglish = pathname.startsWith("/en");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -32,7 +34,7 @@ export default function Navbar() {
       )}
     >
       <div className="container flex items-center justify-between">
-        <Link to="/" className="flex items-center">
+        <Link to={isEnglish ? "/en/" : "/"} className="flex items-center">
           <img
             src={logo}
             alt="Apartman Dragićević"
@@ -63,6 +65,13 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <a
+            href={isEnglish ? "/" : "/en/"}
+            lang={isEnglish ? "sr" : "en"}
+            className="rounded-full px-3 py-2 text-sm font-semibold text-muted-foreground hover:text-foreground"
+          >
+            {isEnglish ? "Srpski" : "English"}
+          </a>
           <a
             href={SITE.phoneHref}
             className="hidden sm:inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-5 py-2.5 rounded-full text-sm font-semibold shadow-card hover:shadow-glow transition-all duration-300 hover:-translate-y-0.5"
@@ -100,6 +109,14 @@ export default function Navbar() {
                 {l.label}
               </NavLink>
             ))}
+            <a
+              href={isEnglish ? "/" : "/en/"}
+              lang={isEnglish ? "sr" : "en"}
+              onClick={() => setOpen(false)}
+              className="px-4 py-3 rounded-xl text-base font-medium text-muted-foreground"
+            >
+              {isEnglish ? "Srpski" : "English"}
+            </a>
             <a
               href={SITE.phoneHref}
               className="mt-2 inline-flex items-center justify-center gap-2 bg-gradient-accent text-accent-foreground px-5 py-3 rounded-full font-semibold"

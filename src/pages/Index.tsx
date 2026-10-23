@@ -6,16 +6,17 @@ import PriceSection from "@/components/PriceSection";
 import GalleryPreview from "@/components/GalleryPreview";
 import GuestTestimonials from "@/components/GuestTestimonials";
 import ReviewSection from "@/components/ReviewSection";
+import GeoDetails from "@/components/GeoDetails";
 import Seo from "@/components/Seo";
 import { heroImage } from "@/lib/media";
-import { baseSchemas, pageSeo } from "@/lib/seo";
+import { pageSeo } from "@/lib/seo";
 
 export default function Index() {
   return (
     <Layout>
       <Seo
         {...pageSeo.home}
-        schema={baseSchemas}
+        schema={[]}
         preloadImage={{
           href: heroImage.src,
           srcSet: heroImage.srcSet,
@@ -23,6 +24,7 @@ export default function Index() {
         }}
       />
       <Hero />
+      <GeoDetails locale="sr" />
       <Features />
       <WhyUs />
       <PriceSection />

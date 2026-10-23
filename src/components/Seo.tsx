@@ -15,6 +15,7 @@ type SeoProps = {
   imageAlt?: string;
   type?: "website" | "article";
   noIndex?: boolean;
+  htmlLang?: string;
   preloadImage?: ImagePreload;
   schema?: Array<Record<string, unknown>>;
 };
@@ -43,6 +44,7 @@ export default function Seo({
   imageAlt = SITE.ogImageAlt,
   type = "website",
   noIndex = false,
+  htmlLang = SITE.htmlLang,
   preloadImage,
   schema = [],
 }: SeoProps) {
@@ -50,7 +52,7 @@ export default function Seo({
     const canonicalUrl = absoluteUrl(path);
     const ogImageUrl = absoluteUrl(image);
     document.title = title;
-    document.documentElement.lang = SITE.htmlLang;
+    document.documentElement.lang = htmlLang;
 
     ensureMeta('meta[name="description"]', () => {
       const meta = document.createElement("meta");
@@ -144,7 +146,7 @@ export default function Seo({
       managedSchemas.forEach((script) => script.remove());
       preloadLink?.remove();
     };
-  }, [description, image, imageAlt, noIndex, path, preloadImage, schema, title, type]);
+  }, [description, htmlLang, image, imageAlt, noIndex, path, preloadImage, schema, title, type]);
 
   return null;
 }

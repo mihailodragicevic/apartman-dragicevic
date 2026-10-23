@@ -47,9 +47,9 @@ type PageSeoConfig = {
 
 export const pageSeo: Record<"home" | "about" | "amenities" | "gallery" | "contact" | "notFound", PageSeoConfig> = {
   home: {
-    title: "Apartman Dragićević | Stan na dan u Bogatiću",
+    title: "Apartman Dragićević | Smeštaj u Bogatiću, Mačva",
     description:
-      "Apartman u Bogatiću na samo 100m od centra. Smeštaj za do 4 osobe sa parkingom, WiFi internetom, klimom i domaćinskim pristupom.",
+      "Apartman za do 4 osobe u Bogatiću: klima, besplatan parking i Wi-Fi, potpuno opremljena kuhinja i dvorište. Direktna rezervacija od 3.000 RSD po noći.",
     path: "/",
   },
   about: {

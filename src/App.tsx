@@ -7,12 +7,14 @@ const Amenities = lazy(() => import("./pages/Amenities"));
 const Gallery = lazy(() => import("./pages/Gallery"));
 const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const EnglishHome = lazy(() => import("./pages/EnglishHome"));
 
 const App = () => (
   <BrowserRouter>
     <Suspense fallback={<div className="min-h-screen bg-background" aria-hidden />}>
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/en/" element={<EnglishHome />} />
         <Route path="/o-nama" element={<About />} />
         <Route path="/sadrzaj" element={<Amenities />} />
         <Route path="/galerija" element={<Gallery />} />

@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Phone, MapPin } from "lucide-react";
 import { SITE } from "@/lib/site";
-import TypingText from "./TypingText";
 import { publicAssetPath } from "@/lib/publicAsset";
+import geoContent from "@/geo-content.json";
 
 const heroImageSrc = publicAssetPath("/images/hero/apartman-bogatic-hero-dnevni-boravak-1600.webp");
 const heroImageSrcSet = [
@@ -12,7 +12,10 @@ const heroImageSrcSet = [
   `${publicAssetPath("/images/hero/apartman-bogatic-hero-dnevni-boravak-1600.webp")} 1600w`,
 ].join(", ");
 
-export default function Hero() {
+type Locale = "sr" | "en";
+
+export default function Hero({ locale = "sr" }: { locale?: Locale }) {
+  const page = geoContent.locales[locale];
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -74,30 +77,28 @@ export default function Hero() {
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 bg-card/80 backdrop-blur px-4 py-1.5 rounded-full text-xs font-medium text-muted-foreground border border-border animate-fade-in-up">
             <MapPin className="h-3.5 w-3.5 text-accent" />
-            Pavla Orlovića 11 · 100m od centra Bogatića
+            {locale === "sr"
+              ? "Pavla Orlovića 11 · 100 m od centra Bogatića"
+              : "Pavla Orlovića 11 · 100 m from Bogatić town center"}
           </div>
-          <h1 className="mt-6 font-display text-5xl md:text-7xl leading-[1.05] text-balance animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-            Apartman u Bogatiću gde se osećate{" "}
-            <TypingText
-              text="kao kod kuće"
-              className="italic text-accent"
-            />
+          <h1 className="mt-6 font-display text-4xl sm:text-5xl md:text-7xl leading-[1.05] text-balance animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+            {page.h1}
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl text-balance animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-            Savršeno opremljen stan na samo 100m od centra. Mir, udobnost i sve što vam treba - spremno za vaš dolazak.
+            {page.description}
           </p>
           <div className="mt-8 flex flex-wrap gap-3 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
             <a
               href={SITE.phoneHref}
               className="hero-call-button inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-7 py-4 rounded-full font-semibold shadow-glow hover:-translate-y-0.5 transition-transform"
             >
-              <Phone className="hero-call-icon h-5 w-5" /> Pozovite odmah
+              <Phone className="hero-call-icon h-5 w-5" /> {locale === "sr" ? "Pozovite odmah" : "Call now"}
             </a>
             <a
               href="#detalji"
               className="hero-secondary-button inline-flex items-center gap-2 bg-card border border-border px-7 py-4 rounded-full font-medium"
             >
-              Saznajte više
+              {locale === "sr" ? "Saznajte više" : "Learn more"}
             </a>
           </div>
         </div>
