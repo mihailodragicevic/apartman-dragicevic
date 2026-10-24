@@ -19,12 +19,12 @@ export default function FaqSection({ locale = "sr" }: { locale?: Locale }) {
         }
         center
       />
-      <div className="mx-auto mt-10 grid max-w-5xl items-start gap-4 md:mt-14 md:grid-cols-2">
+      <div className="mx-auto mt-10 max-w-5xl columns-1 gap-4 md:mt-14 md:columns-2">
         {page.faq.map(([question, answer], index) => (
           <details
             key={question}
             name="apartment-faq"
-            className="faq-card reveal group rounded-2xl border border-border bg-card shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-accent/40 hover:shadow-soft open:border-accent/40 open:shadow-soft"
+            className="faq-card reveal mb-4 break-inside-avoid rounded-2xl border border-border bg-card shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-accent/40 hover:shadow-soft open:border-accent/40 open:shadow-soft"
             style={{ transitionDelay: `${Math.min(index % 4, 3) * 60}ms` }}
           >
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 font-semibold marker:hidden md:p-6 [&::-webkit-details-marker]:hidden">

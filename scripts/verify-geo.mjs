@@ -95,7 +95,11 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
   );
   assertThat(document.querySelector("#faq .reveal") !== null, `${prefix} FAQ section is missing its reveal animation.`);
   assertThat(document.querySelector("#faq .hover\\:-translate-y-1") !== null, `${prefix} FAQ cards are missing their hover effect.`);
-  assertThat(document.querySelector("#faq .md\\:grid-cols-2.items-start") !== null, `${prefix} FAQ cards must keep independent heights in the responsive grid.`);
+  assertThat(document.querySelector("#faq .md\\:columns-2") !== null, `${prefix} FAQ section is missing its independent responsive columns.`);
+  assertThat(
+    [...document.querySelectorAll("#faq details")].every((item) => item.classList.contains("break-inside-avoid")),
+    `${prefix} FAQ cards must not split or stretch to match adjacent cards.`,
+  );
   assertThat(document.querySelectorAll("#root img").length === 1, `${prefix} should contain only the original hero image, not the added gallery.`);
   const heroHeading = normalize(document.querySelector("#root h1")?.textContent ?? "");
   const heroLead = lang === "sr"
