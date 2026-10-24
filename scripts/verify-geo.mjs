@@ -135,6 +135,11 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
       bodyText.includes("Savršeno opremljen stan na samo 100m od centra. Mir, udobnost i sve što vam treba - spremno za vaš dolazak."),
       `${prefix} is missing the original hero introduction.`,
     );
+  } else {
+    assertThat(
+      bodyText.includes("A fully equipped apartment just 100 m from the town center. Peace, comfort and everything you need — ready for your arrival."),
+      `${prefix} is missing the English translation of the original hero introduction.`,
+    );
   }
   assertThat(document.querySelector("#root .animate-fade-in-up") !== null, `${prefix} hero entrance animation is missing.`);
   assertThat(document.querySelector("#root .animate-float") !== null, `${prefix} floating hero animation is missing.`);

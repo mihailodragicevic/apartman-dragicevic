@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { Phone, MapPin } from "lucide-react";
 import { SITE } from "@/lib/site";
 import { publicAssetPath } from "@/lib/publicAsset";
-import geoContent from "@/geo-content.json";
 import TypingText from "./TypingText";
 
 const heroImageSrc = publicAssetPath("/images/hero/apartman-bogatic-hero-dnevni-boravak-1600.webp");
@@ -16,7 +15,6 @@ const heroImageSrcSet = [
 type Locale = "sr" | "en";
 
 export default function Hero({ locale = "sr" }: { locale?: Locale }) {
-  const page = geoContent.locales[locale];
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -92,7 +90,7 @@ export default function Hero({ locale = "sr" }: { locale?: Locale }) {
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl text-balance animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
             {locale === "sr"
               ? "Savršeno opremljen stan na samo 100m od centra. Mir, udobnost i sve što vam treba - spremno za vaš dolazak."
-              : page.description}
+              : "A fully equipped apartment just 100 m from the town center. Peace, comfort and everything you need — ready for your arrival."}
           </p>
           <div className="mt-8 flex flex-wrap gap-3 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
             <a
