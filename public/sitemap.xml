@@ -16,14 +16,50 @@
   </url>
   <url>
     <loc>https://apartmandragicevic.com/o-nama/</loc>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://apartmandragicevic.com/o-nama/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://apartmandragicevic.com/en/about/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://apartmandragicevic.com/o-nama/" />
+  </url>
+  <url>
+    <loc>https://apartmandragicevic.com/en/about/</loc>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://apartmandragicevic.com/o-nama/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://apartmandragicevic.com/en/about/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://apartmandragicevic.com/o-nama/" />
   </url>
   <url>
     <loc>https://apartmandragicevic.com/sadrzaj/</loc>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://apartmandragicevic.com/sadrzaj/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://apartmandragicevic.com/en/amenities/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://apartmandragicevic.com/sadrzaj/" />
+  </url>
+  <url>
+    <loc>https://apartmandragicevic.com/en/amenities/</loc>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://apartmandragicevic.com/sadrzaj/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://apartmandragicevic.com/en/amenities/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://apartmandragicevic.com/sadrzaj/" />
   </url>
   <url>
     <loc>https://apartmandragicevic.com/galerija/</loc>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://apartmandragicevic.com/galerija/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://apartmandragicevic.com/en/gallery/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://apartmandragicevic.com/galerija/" />
+  </url>
+  <url>
+    <loc>https://apartmandragicevic.com/en/gallery/</loc>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://apartmandragicevic.com/galerija/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://apartmandragicevic.com/en/gallery/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://apartmandragicevic.com/galerija/" />
   </url>
   <url>
     <loc>https://apartmandragicevic.com/kontakt/</loc>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://apartmandragicevic.com/kontakt/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://apartmandragicevic.com/en/contact/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://apartmandragicevic.com/kontakt/" />
+  </url>
+  <url>
+    <loc>https://apartmandragicevic.com/en/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://apartmandragicevic.com/kontakt/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://apartmandragicevic.com/en/contact/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://apartmandragicevic.com/kontakt/" />
   </url>
 </urlset>

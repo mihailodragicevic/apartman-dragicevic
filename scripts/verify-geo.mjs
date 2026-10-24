@@ -32,6 +32,20 @@ const containsPlaceholder = (value) => {
   return false;
 };
 
+const verifyImagePaths = async (document, prefix) => {
+  assertThat(!document.documentElement.outerHTML.includes("/src/assets/"), `${prefix} contains unresolved source asset paths.`);
+  for (const image of document.querySelectorAll("img[src]")) {
+    const source = image.getAttribute("src");
+    if (!source || /^https?:\/\//i.test(source) || source.startsWith("data:")) continue;
+    const imagePath = path.join(distDir, decodeURIComponent(source.split(/[?#]/)[0].replace(/^\/+/, "")));
+    try {
+      await fs.access(imagePath);
+    } catch {
+      fail(`${prefix} references an image missing from build output: ${source}`);
+    }
+  }
+};
+
 const runBuild = () => {
   const npmCli = process.env.npm_execpath;
   if (!npmCli) fail("Run this check through `npm run verify:geo` so the production build can be invoked.");
@@ -81,6 +95,7 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
   );
 
   const bodyText = normalize(document.body.textContent);
+  await verifyImagePaths(document, prefix);
   assertThat(!hasPlaceholder(bodyText), `${prefix} visible content contains a square-bracket placeholder.`);
   assertThat(document.querySelectorAll("h1").length === 1, `${prefix} must contain exactly one H1.`);
   assertThat(document.querySelectorAll("img:not([alt]), img[alt='']").length === 0, `${prefix} contains an image with missing alt text.`);
@@ -100,7 +115,15 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
     [...document.querySelectorAll("#faq details")].every((item) => item.classList.contains("break-inside-avoid")),
     `${prefix} FAQ cards must not split or stretch to match adjacent cards.`,
   );
-  assertThat(document.querySelectorAll("#root img").length === 1, `${prefix} should contain only the original hero image, not the added gallery.`);
+  assertThat(document.querySelectorAll("#root img").length >= 6, `${prefix} is missing static homepage sections and images.`);
+  for (const requiredText of [
+    lang === "sr" ? "Pogodnosti" : "Amenities",
+    lang === "sr" ? "Cenovnik" : "Pricing",
+    lang === "sr" ? "Galerija" : "Gallery",
+    lang === "sr" ? "Recenzije" : "Reviews",
+  ]) {
+    assertThat(bodyText.includes(requiredText), `${prefix} is missing the localized homepage section "${requiredText}".`);
+  }
   const heroHeading = normalize(document.querySelector("#root h1")?.textContent ?? "");
   const heroLead = lang === "sr"
     ? "Apartman u Bogatiću gde se osećate"
@@ -196,6 +219,55 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
   return { html, rental };
 };
 
+const verifyOtherRoutes = async () => {
+  const routePairs = [
+    ["/o-nama/", "/en/about/"],
+    ["/sadrzaj/", "/en/amenities/"],
+    ["/galerija/", "/en/gallery/"],
+    ["/kontakt/", "/en/contact/"],
+  ];
+  for (const [serbianPath, englishPath] of routePairs) {
+    for (const [routePath, lang] of [[serbianPath, "sr"], [englishPath, "en"]]) {
+      const file = path.join(distDir, routePath.slice(1), "index.html");
+      const html = await fs.readFile(file, "utf8");
+      const { document } = new JSDOM(html).window;
+      const bodyText = normalize(document.body.textContent);
+      const prefix = `${routePath}:`;
+      const alternates = new Map(
+        [...document.querySelectorAll('link[rel="alternate"][hreflang]')].map((link) => [
+          link.hreflang,
+          link.href,
+        ]),
+      );
+      const expectedSr = `${siteUrl}${serbianPath}`;
+      const expectedEn = `${siteUrl}${englishPath}`;
+      assertThat(document.documentElement.lang === lang, `${prefix} has the wrong document language.`);
+      assertThat(Boolean(document.title.trim()), `${prefix} is missing its title.`);
+      assertThat(
+        document.querySelector('meta[name="description"]')?.content.length >= 50,
+        `${prefix} is missing a useful meta description.`,
+      );
+      assertThat(
+        document.querySelector('link[rel="canonical"]')?.href === `${siteUrl}${routePath}`,
+        `${prefix} has the wrong canonical URL.`,
+      );
+      assertThat(alternates.get("sr") === expectedSr, `${prefix} has the wrong sr hreflang alternate.`);
+      assertThat(alternates.get("en") === expectedEn, `${prefix} has the wrong en hreflang alternate.`);
+      assertThat(alternates.get("x-default") === expectedSr, `${prefix} has the wrong x-default alternate.`);
+      assertThat(document.querySelectorAll("h1").length === 1, `${prefix} must contain exactly one H1.`);
+      assertThat(bodyText.length > 100, `${prefix} is missing its statically rendered page content.`);
+      assertThat(document.querySelectorAll("#root img").length > 0, `${prefix} is missing its static page imagery or brand mark.`);
+      await verifyImagePaths(document, prefix);
+      assertThat(!hasPlaceholder(bodyText), `${prefix} contains a square-bracket placeholder.`);
+      assertThat(!html.toLowerCase().includes("airbnb"), `${prefix} output contains a forbidden brand reference.`);
+      assertThat(
+        document.querySelector('meta[name="robots"]')?.content.toLowerCase().includes("noindex") !== true,
+        `${prefix} contains a noindex robots meta tag.`,
+      );
+    }
+  }
+};
+
 const walkFiles = async (directory) => {
   const entries = await fs.readdir(directory, { withFileTypes: true });
   const children = await Promise.all(
@@ -218,8 +290,11 @@ const verifyPublicFiles = async () => {
   const sitemapDocument = new JSDOM(sitemap, { contentType: "application/xml" }).window.document;
   assertThat(!sitemapDocument.querySelector("parsererror"), "sitemap.xml is not valid XML.");
   const entries = [...sitemapDocument.getElementsByTagName("url")];
-  const expectedRoutes = ["/", "/en/", "/o-nama/", "/sadrzaj/", "/galerija/", "/kontakt/"];
-  assertThat(entries.length === expectedRoutes.length, "sitemap.xml must contain both language home routes and all existing site pages.");
+  const expectedRoutes = [
+    "/", "/en/", "/o-nama/", "/sadrzaj/", "/galerija/", "/kontakt/",
+    "/en/about/", "/en/amenities/", "/en/gallery/", "/en/contact/",
+  ];
+  assertThat(entries.length === expectedRoutes.length, "sitemap.xml must contain both language versions of all site pages.");
   const locations = entries.map((entry) => entry.getElementsByTagName("loc")[0]?.textContent);
   for (const route of expectedRoutes) {
     assertThat(locations.includes(`${siteUrl}${route}`), `sitemap.xml is missing canonical route ${route}.`);
@@ -234,16 +309,31 @@ const verifyPublicFiles = async () => {
   }
   for (const entry of entries) {
     const location = entry.getElementsByTagName("loc")[0]?.textContent;
-    if (location !== `${siteUrl}/` && location !== `${siteUrl}/en/`) continue;
+    const pathName = location?.replace(siteUrl, "");
+    const translatedPath = {
+      "/": "/en/",
+      "/en/": "/",
+      "/o-nama/": "/en/about/",
+      "/en/about/": "/o-nama/",
+      "/sadrzaj/": "/en/amenities/",
+      "/en/amenities/": "/sadrzaj/",
+      "/galerija/": "/en/gallery/",
+      "/en/gallery/": "/galerija/",
+      "/kontakt/": "/en/contact/",
+      "/en/contact/": "/kontakt/",
+    }[pathName];
+    if (!translatedPath) continue;
     const alternates = new Map(
       [...entry.getElementsByTagName("xhtml:link")].map((link) => [
         link.getAttribute("hreflang"),
         link.getAttribute("href"),
       ]),
     );
-    assertThat(alternates.get("sr") === `${siteUrl}/`, "sitemap hreflang sr alternate is missing or incorrect.");
-    assertThat(alternates.get("en") === `${siteUrl}/en/`, "sitemap hreflang en alternate is missing or incorrect.");
-    assertThat(alternates.get("x-default") === `${siteUrl}/`, "sitemap x-default alternate is missing or incorrect.");
+    const srPath = pathName.startsWith("/en/") ? translatedPath : pathName;
+    const enPath = pathName.startsWith("/en/") ? pathName : translatedPath;
+    assertThat(alternates.get("sr") === `${siteUrl}${srPath}`, `sitemap hreflang sr alternate is incorrect for ${pathName}.`);
+    assertThat(alternates.get("en") === `${siteUrl}${enPath}`, `sitemap hreflang en alternate is incorrect for ${pathName}.`);
+    assertThat(alternates.get("x-default") === `${siteUrl}${srPath}`, `sitemap x-default alternate is incorrect for ${pathName}.`);
   }
 
   const vercel = JSON.parse(await fs.readFile(path.join(projectDir, "vercel.json"), "utf8"));
@@ -277,8 +367,9 @@ const main = async () => {
     pages[0].rental.description !== pages[1].rental.description,
     "VacationRental description must be localized for the English page.",
   );
+  await verifyOtherRoutes();
   await verifyPublicFiles();
-  console.log("verify:geo: passed for / and /en/ (static HTML, metadata, JSON-LD, facts, images, robots, sitemap and Vercel config).");
+  console.log("verify:geo: passed for all 10 routes (static HTML, metadata, JSON-LD, facts, images, robots, sitemap and Vercel config).");
 };
 
 main().catch((error) => {

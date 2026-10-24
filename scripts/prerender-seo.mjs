@@ -1,5 +1,9 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import React from "react";
+import { renderToString } from "react-dom/server";
+import { MemoryRouter } from "react-router-dom";
+import { createServer } from "vite";
 import geoContent from "../src/geo-content.json" with { type: "json" };
 
 const siteUrl = "https://apartmandragicevic.com";
@@ -10,18 +14,21 @@ const pages = [
   {
     path: "/",
     locale: "sr",
+    module: "/src/pages/Index.tsx",
     title: geoContent.locales.sr.title,
     description: geoContent.locales.sr.description,
   },
   {
     path: "/en/",
     locale: "en",
+    module: "/src/pages/EnglishHome.tsx",
     title: geoContent.locales.en.title,
     description: geoContent.locales.en.description,
   },
   {
     path: "/o-nama/",
     locale: "sr",
+    module: "/src/pages/About.tsx",
     title: "O nama | Apartman Dragićević Bogatić",
     description:
       "Saznajte više o Apartmanu Dragićević u Bogatiću, našoj priči, gostoljubivosti i detaljima koji gostima daju osećaj kao kod kuće.",
@@ -29,6 +36,7 @@ const pages = [
   {
     path: "/sadrzaj/",
     locale: "sr",
+    module: "/src/pages/Amenities.tsx",
     title: "Sadržaj apartmana | Apartman Dragićević Bogatić",
     description:
       "Pogledajte sadržaj apartmana u Bogatiću: WiFi, klima, parking, Smart TV, opremljena kuhinja, moderno kupatilo i još mnogo pogodnosti.",
@@ -36,6 +44,7 @@ const pages = [
   {
     path: "/galerija/",
     locale: "sr",
+    module: "/src/pages/Gallery.tsx",
     title: "Galerija | Apartman Dragićević Bogatić",
     description:
       "Pregledajte galeriju fotografija apartmana u Bogatiću i upoznajte dnevni boravak, kuhinju, kupatilo, spavaću sobu i dvorište.",
@@ -43,11 +52,56 @@ const pages = [
   {
     path: "/kontakt/",
     locale: "sr",
+    module: "/src/pages/Contact.tsx",
     title: "Kontakt i rezervacije | Apartman Dragićević Bogatić",
     description:
       "Kontaktirajte Apartman Dragićević u Bogatiću za rezervacije, proveru dostupnosti, adresu, mapu, email i direktan telefonski poziv.",
   },
+  {
+    path: "/en/about/",
+    locale: "en",
+    module: "/src/pages/About.tsx",
+    title: "About us | Apartman Dragićević Bogatić",
+    description:
+      "Learn about Apartman Dragićević in Bogatić, our story, hospitality and the details that make guests feel at home.",
+  },
+  {
+    path: "/en/amenities/",
+    locale: "en",
+    module: "/src/pages/EnglishAmenities.tsx",
+    title: "Apartment amenities | Apartman Dragićević Bogatić",
+    description:
+      "Explore the amenities at Apartman Dragićević in Bogatić: Wi-Fi, air conditioning, parking, Smart TV, equipped kitchen, modern bathroom and more.",
+  },
+  {
+    path: "/en/gallery/",
+    locale: "en",
+    module: "/src/pages/Gallery.tsx",
+    title: "Gallery | Apartman Dragićević Bogatić",
+    description:
+      "Browse photos of Apartman Dragićević in Bogatić, including the living room, kitchen, bathroom, bedroom and garden.",
+  },
+  {
+    path: "/en/contact/",
+    locale: "en",
+    module: "/src/pages/Contact.tsx",
+    title: "Contact and bookings | Apartman Dragićević Bogatić",
+    description:
+      "Contact Apartman Dragićević in Bogatić to make a booking, check availability, get directions or call us directly.",
+  },
 ];
+const translations = {
+  "/": "/en/",
+  "/en/": "/",
+  "/o-nama/": "/en/about/",
+  "/en/about/": "/o-nama/",
+  "/sadrzaj/": "/en/amenities/",
+  "/en/amenities/": "/sadrzaj/",
+  "/galerija/": "/en/gallery/",
+  "/en/gallery/": "/galerija/",
+  "/kontakt/": "/en/contact/",
+  "/en/contact/": "/kontakt/",
+};
 
 const escapeHtml = (value) =>
   String(value)
@@ -56,49 +110,6 @@ const escapeHtml = (value) =>
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
-
-const renderHeroMarkup = (locale) => {
-  const page = geoContent.locales[locale];
-  const hero = geoContent.images[0];
-  const lead =
-    locale === "sr"
-      ? "Apartman u Bogatiću gde se osećate "
-      : "Apartman in Bogatić where you feel ";
-  const typedText = locale === "sr" ? "kao kod kuće" : "at home";
-  const description =
-    locale === "sr"
-      ? "Savršeno opremljen stan na samo 100m od centra. Mir, udobnost i sve što vam treba - spremno za vaš dolazak."
-      : page.description;
-
-  return `<section class="relative min-h-[100svh] flex items-center overflow-hidden">
-    <div class="absolute inset-0"><picture class="block h-full w-full"><source srcset="${escapeHtml(hero.src)}" sizes="100vw" type="image/webp"><img src="${escapeHtml(hero.src)}" srcset="${escapeHtml(hero.src)}" sizes="100vw" alt="${escapeHtml(hero.alt[locale])}" class="h-full w-full object-cover" width="1920" height="1080" fetchpriority="high" style="transform:translate3d(calc(var(--mx,0)*-10px),calc(var(--my,0)*-10px),0) scale(1.05)"></picture><div class="absolute inset-0 bg-gradient-to-b from-background/40 via-background/30 to-background"></div></div>
-    <div class="hero-soft-shape absolute top-24 left-10 h-40 w-40 rounded-full bg-accent/20 blur-3xl animate-float" style="transform:translate3d(calc(var(--mx,0)*30px),calc(var(--my,0)*30px),0)" aria-hidden="true"></div>
-    <div class="hero-soft-shape absolute bottom-32 right-10 h-56 w-56 rounded-full bg-primary/10 blur-3xl animate-float" style="animation-delay:1.5s;transform:translate3d(calc(var(--mx,0)*-40px),calc(var(--my,0)*-40px),0)" aria-hidden="true"></div>
-    <div class="container relative z-10 pt-32 pb-20"><div class="max-w-3xl">
-      <div class="inline-flex items-center gap-2 bg-card/80 backdrop-blur px-4 py-1.5 rounded-full text-xs font-medium text-muted-foreground border border-border animate-fade-in-up">${locale === "sr" ? "Pavla Orlovića 11 · 100m od centra Bogatića" : "Pavla Orlovića 11 · 100 m from Bogatić town center"}</div>
-      <h1 class="mt-6 font-display text-5xl md:text-7xl leading-[1.05] text-balance animate-fade-in-up" style="animation-delay:0.1s">${escapeHtml(lead)}<span class="typing-text italic text-accent"><span class="typing-text-ghost" aria-hidden="true">${escapeHtml(typedText)}</span><span class="typing-text-live" aria-label="${escapeHtml(typedText)}">${escapeHtml(typedText)}<span class="typing-text-cursor" aria-hidden="true"></span></span></span></h1>
-      <p class="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl text-balance animate-fade-in-up" style="animation-delay:0.2s">${escapeHtml(description)}</p>
-      <div class="mt-8 flex flex-wrap gap-3 animate-fade-in-up" style="animation-delay:0.3s"><a href="tel:+381658103247" class="hero-call-button inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-7 py-4 rounded-full font-semibold shadow-glow hover:-translate-y-0.5 transition-transform">${locale === "sr" ? "Pozovite odmah" : "Call now"}</a><a href="#detalji" class="hero-secondary-button inline-flex items-center gap-2 bg-card border border-border px-7 py-4 rounded-full font-medium">${locale === "sr" ? "Saznajte više" : "Learn more"}</a></div>
-    </div></div>
-  </section>`;
-};
-
-const renderFaqMarkup = (locale) => {
-  const page = geoContent.locales[locale];
-  const eyebrow = locale === "sr" ? "Pitanja i odgovori" : "Questions and answers";
-  const subtitle =
-    locale === "sr"
-      ? "Odgovori na najčešća pitanja o boravku, sadržaju i rezervaciji."
-      : "Answers to common questions about the apartment, amenities and booking.";
-  const faq = page.faq
-    .map(
-      ([question, answer], index) =>
-        `<details name="apartment-faq" class="faq-card reveal mb-4 break-inside-avoid group rounded-2xl border border-border bg-card shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-accent/40 hover:shadow-soft open:border-accent/40 open:shadow-soft" style="transition-delay:${Math.min(index % 4, 3) * 60}ms"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 font-semibold marker:hidden md:p-6 [&amp;::-webkit-details-marker]:hidden"><span>${escapeHtml(question)}</span><span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent-soft text-accent transition-transform duration-300 group-open:rotate-45"><span aria-hidden="true">+</span></span></summary><div class="faq-answer px-5 pb-5 text-sm leading-relaxed text-muted-foreground md:px-6 md:pb-6 md:text-base">${escapeHtml(answer)}</div></details>`,
-    )
-    .join("");
-
-  return `<section id="faq" class="container py-20 md:py-24"><div class="reveal mx-auto max-w-2xl text-center"><div class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">${eyebrow}</div><h2 class="font-display text-4xl leading-tight text-balance md:text-5xl">${escapeHtml(page.sections.faq)}</h2><p class="mt-4 text-lg text-muted-foreground text-balance">${subtitle}</p></div><div class="mx-auto mt-10 max-w-5xl columns-1 gap-4 md:mt-14 md:columns-2">${faq}</div></section>`;
-};
 
 const rentalSchema = (locale) => ({
   "@context": "https://schema.org",
@@ -263,24 +274,24 @@ const renderPage = (template, page) => {
   }
 
   html = html.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>\s*/g, "");
-  const alternates =
-    page.path === "/" || page.path === "/en/"
-      ? [
-          ["sr", `${siteUrl}/`],
-          ["en", `${siteUrl}/en/`],
-          ["x-default", `${siteUrl}/`],
-        ]
-          .map(([language, href]) => `<link rel="alternate" hreflang="${language}" href="${href}" />`)
-          .join("\n    ")
-      : "";
+  const translatedPath = translations[page.path];
+  const srPath = page.locale === "sr" ? page.path : translatedPath;
+  const enPath = page.locale === "en" ? page.path : translatedPath;
+  const alternates = translatedPath
+    ? [
+        ["sr", `${siteUrl}${srPath}`],
+        ["en", `${siteUrl}${enPath}`],
+        ["x-default", `${siteUrl}${srPath}`],
+      ]
+        .map(([language, href]) => `<link rel="alternate" hreflang="${language}" href="${href}" />`)
+        .join("\n    ")
+    : "";
   html = html.replace(
     "</head>",
     `    ${alternates}\n    <meta name="twitter:image:alt" content="${escapeHtml(geoContent.images[0].alt[page.locale])}" />\n    </head>`,
   );
 
-  if (page.locale === "sr" && page.path === "/" || page.locale === "en") {
-    const markup = `${renderHeroMarkup(page.locale)}${renderFaqMarkup(page.locale)}`;
-    html = replaceOnce(html, /<div id="root"><\/div>/, `<div id="root">${markup}</div>`, "prerendered hero and FAQ");
+  if (page.path === "/" || page.path === "/en/") {
     const schemas = [rentalSchema(page.locale), faqSchema(page.locale)]
       .map((schema) => `<script type="application/ld+json">${JSON.stringify(schema)}</script>`)
       .join("\n    ");
@@ -293,13 +304,54 @@ const renderPage = (template, page) => {
 const main = async () => {
   const indexPath = path.join(distDir, "index.html");
   const template = await fs.readFile(indexPath, "utf8");
+  const assetDirectory = path.join(distDir, "assets");
+  const builtAssets = await fs.readdir(assetDirectory);
+  const vite = await createServer({
+    server: { middlewareMode: true },
+    appType: "custom",
+  });
 
-  for (const page of pages) {
-    const html = renderPage(template, page);
-    const relativePath = page.path === "/" ? "index.html" : path.join(page.path.slice(1), "index.html");
-    const outputPath = path.join(distDir, relativePath);
-    await fs.mkdir(path.dirname(outputPath), { recursive: true });
-    await fs.writeFile(outputPath, html, "utf8");
+  try {
+    for (const page of pages) {
+      const { default: Page } = await vite.ssrLoadModule(page.module);
+      const renderedMarkup = renderToString(
+        React.createElement(
+          MemoryRouter,
+          { initialEntries: [page.path] },
+          React.createElement(Page),
+        ),
+      );
+      const markupWithBuiltAssets = renderedMarkup.replace(
+        /\/src\/assets\/([^"' ]+)/g,
+        (assetPath, encodedName) => {
+          const sourceName = decodeURIComponent(encodedName.split(/[?#]/)[0]);
+          const sourceExtension = path.extname(sourceName);
+          const assetStem = path.basename(sourceName, sourceExtension);
+          const builtAsset = builtAssets.find(
+            (fileName) =>
+              fileName === sourceName ||
+              fileName.startsWith(`${assetStem}-`) && path.extname(fileName) === sourceExtension,
+          );
+          if (!builtAsset) {
+            throw new Error(`Could not find built asset for prerendered image: ${sourceName}`);
+          }
+          return `/assets/${builtAsset}`;
+        },
+      );
+      const pageHtml = renderPage(template, page);
+      const html = replaceOnce(
+        pageHtml,
+        /<div id="root"><\/div>/,
+        `<div id="root">${markupWithBuiltAssets}</div>`,
+        `prerendered ${page.path}`,
+      );
+      const relativePath = page.path === "/" ? "index.html" : path.join(page.path.slice(1), "index.html");
+      const outputPath = path.join(distDir, relativePath);
+      await fs.mkdir(path.dirname(outputPath), { recursive: true });
+      await fs.writeFile(outputPath, html, "utf8");
+    }
+  } finally {
+    await vite.close();
   }
 };
 
