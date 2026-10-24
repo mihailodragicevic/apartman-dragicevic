@@ -19,7 +19,7 @@ export default function FaqSection({ locale = "sr" }: { locale?: Locale }) {
         }
         center
       />
-      <div className="mx-auto mt-10 grid max-w-5xl gap-4 md:mt-14 md:grid-cols-2">
+      <div className="mx-auto mt-10 grid max-w-5xl items-start gap-4 md:mt-14 md:grid-cols-2">
         {page.faq.map(([question, answer], index) => (
           <details
             key={question}

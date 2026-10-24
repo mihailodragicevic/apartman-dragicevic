@@ -97,7 +97,7 @@ const renderFaqMarkup = (locale) => {
     )
     .join("");
 
-  return `<section id="faq" class="container py-20 md:py-24"><div class="reveal mx-auto max-w-2xl text-center"><div class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">${eyebrow}</div><h2 class="font-display text-4xl leading-tight text-balance md:text-5xl">${escapeHtml(page.sections.faq)}</h2><p class="mt-4 text-lg text-muted-foreground text-balance">${subtitle}</p></div><div class="mx-auto mt-10 grid max-w-5xl gap-4 md:mt-14 md:grid-cols-2">${faq}</div></section>`;
+  return `<section id="faq" class="container py-20 md:py-24"><div class="reveal mx-auto max-w-2xl text-center"><div class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">${eyebrow}</div><h2 class="font-display text-4xl leading-tight text-balance md:text-5xl">${escapeHtml(page.sections.faq)}</h2><p class="mt-4 text-lg text-muted-foreground text-balance">${subtitle}</p></div><div class="mx-auto mt-10 grid max-w-5xl items-start gap-4 md:mt-14 md:grid-cols-2">${faq}</div></section>`;
 };
 
 const rentalSchema = (locale) => ({
