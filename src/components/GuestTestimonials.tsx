@@ -20,7 +20,7 @@ function getRelativeOffset(index: number, selected: number, total: number) {
   return diff;
 }
 
-export default function GuestTestimonials() {
+export default function GuestTestimonials({ locale = "sr" }: { locale?: "sr" | "en" }) {
   const [api, setApi] = useState<CarouselApi>();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -43,9 +43,9 @@ export default function GuestTestimonials() {
     <section className="container py-24 overflow-hidden">
       <div className="flex flex-wrap items-end justify-between gap-6">
         <SectionHeading
-          eyebrow="Utisci gostiju"
-          title={<>Kako boravak izgleda kada ga <em className="italic text-accent">prepričaju gosti</em></>}
-          subtitle="Jedan po jedan utisak, bez žurbe. Glavna kartica je u fokusu, a sledeće se blago naziru sa strane kao naredni kadar."
+          eyebrow={locale === "sr" ? "Utisci gostiju" : "Guest experiences"}
+          title={locale === "sr" ? <>Kako boravak izgleda kada ga <em className="italic text-accent">prepričaju gosti</em></> : <>A stay, told in our guests’ <em className="italic text-accent">own words</em></>}
+          subtitle={locale === "sr" ? "Jedan po jedan utisak, bez žurbe. Glavna kartica je u fokusu, a sledeće se blago naziru sa strane kao naredni kadar." : "Take your time with each review. The active card stays in focus while the next ones peek in at the sides."}
         />
 
         <div className="reveal flex items-center gap-3">
@@ -53,7 +53,7 @@ export default function GuestTestimonials() {
             type="button"
             variant="outline"
             size="icon"
-            aria-label="Prethodna recenzija"
+            aria-label={locale === "sr" ? "Prethodna recenzija" : "Previous review"}
             className="h-11 w-11 rounded-full border-border bg-card/90 shadow-card hover:bg-secondary"
             onClick={() => api?.scrollPrev()}
           >
@@ -63,7 +63,7 @@ export default function GuestTestimonials() {
             type="button"
             variant="outline"
             size="icon"
-            aria-label="Sledeća recenzija"
+            aria-label={locale === "sr" ? "Sledeća recenzija" : "Next review"}
             className="h-11 w-11 rounded-full border-border bg-card/90 shadow-card hover:bg-secondary"
             onClick={() => api?.scrollNext()}
           >
@@ -105,13 +105,15 @@ export default function GuestTestimonials() {
                     <div>
                       <div className="font-display text-2xl leading-tight">{testimonial.author}</div>
                       <p className="mt-1 text-sm uppercase tracking-[0.18em] text-muted-foreground">
-                        {testimonial.country}
+                        {locale === "en"
+                          ? ({ Srbija: "Serbia", Nemačka: "Germany", Holandija: "the Netherlands", Austrija: "Austria" }[testimonial.country] ?? testimonial.country)
+                          : testimonial.country}
                       </p>
                     </div>
 
                     <div className="rounded-full bg-accent-soft px-4 py-2 text-right">
                       <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">
-                        Ocena
+                        {locale === "sr" ? "Ocena" : "Rating"}
                       </div>
                       <div className="mt-1 flex items-center gap-2">
                         <div className="font-display text-2xl leading-none text-foreground">
@@ -127,7 +129,17 @@ export default function GuestTestimonials() {
                   </div>
 
                   <div className="mt-6 space-y-4 text-[15px] leading-7 text-foreground/85 md:text-base md:leading-8">
-                    {testimonial.paragraphs.map((paragraph, paragraphIndex) => (
+                    {(locale === "en"
+                      ? [
+                          "Everything was just as it should be: clean, functional and very welcoming. It felt as if we had come to visit relatives, and the location was excellent and peaceful.",
+                          "The apartment was spacious, tidy and full of little touches that made the stay easier. Our host Mira is wonderful, considerate and always ready to help.",
+                          "Peaceful, clean and nicely equipped. Everything was just a few steps away, yet we still had quiet and could return to a peaceful place. I highly recommend it.",
+                          "The apartment was fully equipped and very clean. The hosts were lovely, communication was excellent, and the stay was pleasant and stress-free.",
+                          "A warm welcome, excellent communication and a very tidy apartment. Everything we needed was available, and the stay felt very comfortable and relaxing.",
+                          "The service was exceptionally good and everything was in perfect order. The cleanliness, peace and attention to detail left a very positive impression.",
+                          "A central location, kind hosts and a very pleasant stay. Everything had a little extra care and warmth, which you notice right away.",
+                        ][index] ?? ""
+                      : testimonial.paragraphs[0] ?? "").split("\n").map((paragraph, paragraphIndex) => (
                       <p key={paragraphIndex}>{paragraph}</p>
                     ))}
                   </div>

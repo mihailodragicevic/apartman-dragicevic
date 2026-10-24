@@ -18,7 +18,25 @@ const details = [
   "Domaćinski pristup od dolaska do odlaska",
 ];
 
-export default function WhyUs() {
+export default function WhyUs({ locale = "sr" }: { locale?: "sr" | "en" }) {
+  const details =
+    locale === "sr"
+      ? [
+          "Aparat za kafu + više vrsta kafe",
+          "Voće, sokovi i mleko za kafu",
+          "Higijenski setovi i čisti peškiri",
+          "Pegla, fen i veš mašina",
+          "Posteljina visokog kvaliteta",
+          "Domaćinski pristup od dolaska do odlaska",
+        ]
+      : [
+          "Coffee machine and several coffee options",
+          "Fruit, juice and milk for coffee",
+          "Hygiene kits and clean towels",
+          "Iron, hair dryer and washing machine",
+          "High-quality bed linen",
+          "A warm welcome from arrival to departure",
+        ];
   return (
     <section className="bg-secondary/50">
       <div className="container py-24 grid lg:grid-cols-2 gap-14 items-center">
@@ -29,7 +47,7 @@ export default function WhyUs() {
               src={coffeeImageSrc}
               srcSet={coffeeImageSrcSet}
               sizes="(min-width: 1024px) 50vw, 100vw"
-              alt="Aparat za kafu i šolje na pultu apartmana"
+              alt={locale === "sr" ? "Aparat za kafu i šolje na pultu apartmana" : "Coffee machine and cups in the apartment"}
               loading="lazy"
               width={1205}
               height={1600}
@@ -37,16 +55,16 @@ export default function WhyUs() {
             />
           </picture>
           <div className="absolute -bottom-6 -right-4 md:-right-8 bg-card border border-border rounded-2xl px-5 py-4 shadow-card max-w-[14rem]">
-            <div className="text-xs text-muted-foreground">Ocena gostiju</div>
+            <div className="text-xs text-muted-foreground">{locale === "sr" ? "Ocena gostiju" : "Guest rating"}</div>
             <div className="font-display text-2xl">5.0 / 5.0</div>
             <div className="text-xs text-accent">★★★★★</div>
           </div>
         </div>
         <div>
           <SectionHeading
-            eyebrow="Zašto baš mi"
-            title={<>Detalji koji prave <em className="italic text-accent">razliku</em></>}
-            subtitle="Verujemo da je gostoljubivost u sitnicama. Svaki detalj je tu da se osećate prijatno."
+            eyebrow={locale === "sr" ? "Zašto baš mi" : "Why choose us"}
+            title={locale === "sr" ? <>Detalji koji prave <em className="italic text-accent">razliku</em></> : <>Details that make a <em className="italic text-accent">difference</em></>}
+            subtitle={locale === "sr" ? "Verujemo da je gostoljubivost u sitnicama. Svaki detalj je tu da se osećate prijatno." : "We believe hospitality is in the details. Everything is here to help you feel comfortable."}
           />
           <ul className="mt-8 space-y-3">
             {details.map((d, i) => (

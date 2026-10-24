@@ -8,6 +8,7 @@ const Gallery = lazy(() => import("./pages/Gallery"));
 const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const EnglishHome = lazy(() => import("./pages/EnglishHome"));
+const EnglishAmenities = lazy(() => import("./pages/EnglishAmenities"));
 
 const App = () => (
   <BrowserRouter>
@@ -15,6 +16,10 @@ const App = () => (
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/en/" element={<EnglishHome />} />
+        <Route path="/en/about/" element={<About />} />
+        <Route path="/en/amenities/" element={<EnglishAmenities />} />
+        <Route path="/en/gallery/" element={<Gallery />} />
+        <Route path="/en/contact/" element={<Contact />} />
         <Route path="/o-nama" element={<About />} />
         <Route path="/sadrzaj" element={<Amenities />} />
         <Route path="/galerija" element={<Gallery />} />

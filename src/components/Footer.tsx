@@ -1,9 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Phone, Mail, MapPin, Instagram } from "lucide-react";
 import logo from "@/assets/Logo_WEB 3.svg";
 import { SITE } from "@/lib/site";
 
 export default function Footer() {
+  const isEnglish = useLocation().pathname.startsWith("/en");
+  const pages = isEnglish
+    ? [
+        ["/en/", "Home"],
+        ["/en/about/", "About"],
+        ["/en/amenities/", "Amenities"],
+        ["/en/gallery/", "Gallery"],
+        ["/en/contact/", "Contact"],
+      ]
+    : [
+        ["/", "Početna"],
+        ["/o-nama", "O nama"],
+        ["/sadrzaj", "Sadržaj"],
+        ["/galerija", "Galerija"],
+        ["/kontakt", "Kontakt"],
+      ];
   return (
     <footer className="mt-24 border-t border-border bg-secondary/40">
       <div className="container grid gap-10 py-14 md:grid-cols-2 xl:grid-cols-4">
@@ -16,7 +32,9 @@ export default function Footer() {
             height={140}
           />
           <p className="mt-3 max-w-sm text-muted-foreground">
-            Stan na dan u Bogatiću, na samo 100m od centra. Udobnost, mir i domaćinski pristup.
+            {isEnglish
+              ? "A short-stay apartment in Bogatić, just 100 m from the town center. Comfort, peace and a warm welcome."
+              : "Stan na dan u Bogatiću, na samo 100m od centra. Udobnost, mir i domaćinski pristup."}
           </p>
         </div>
         <div className="space-y-3 text-sm">
@@ -31,13 +49,11 @@ export default function Footer() {
           </a>
         </div>
         <div className="text-sm text-muted-foreground">
-          <div className="mb-3 font-medium text-foreground">Stranice</div>
+          <div className="mb-3 font-medium text-foreground">{isEnglish ? "Pages" : "Stranice"}</div>
           <ul className="space-y-2">
-            <li><Link to="/" className="hover:text-accent">Početna</Link></li>
-            <li><Link to="/o-nama" className="hover:text-accent">O nama</Link></li>
-            <li><Link to="/sadrzaj" className="hover:text-accent">Sadržaj</Link></li>
-            <li><Link to="/galerija" className="hover:text-accent">Galerija</Link></li>
-            <li><Link to="/kontakt" className="hover:text-accent">Kontakt</Link></li>
+            {pages.map(([to, label]) => (
+              <li key={to}><Link to={to} className="hover:text-accent">{label}</Link></li>
+            ))}
           </ul>
         </div>
         <div className="text-sm text-muted-foreground">
@@ -56,7 +72,7 @@ export default function Footer() {
         <div className="container flex flex-col gap-2 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <div>© 2026 Apartman Dragićević · Bogatić</div>
           <div>
-            Made by{" "}
+            {isEnglish ? "Made by" : "Izradio"}{" "}
             <a
               href="https://mihailodev.com/sr"
               target="_blank"

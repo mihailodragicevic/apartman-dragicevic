@@ -27,6 +27,21 @@ export type GalleryItem = {
   h: number;
 };
 
+export const getEnglishGalleryAlt = (alt: string) => {
+  const subject = alt.replace("Apartman Dragićević - ", "");
+  if (subject.startsWith("dnevni boravak")) return "Apartman Dragićević - living room";
+  if (subject.startsWith("spavaća soba detalj")) return `Apartman Dragićević - bedroom detail ${subject.slice(-1)}`;
+  if (subject === "spavaća soba") return "Apartman Dragićević - bedroom";
+  if (subject === "moderno kupatilo") return "Apartman Dragićević - modern bathroom";
+  if (subject === "detalj kupatila") return "Apartman Dragićević - bathroom detail";
+  if (subject === "opremljena kuhinja") return "Apartman Dragićević - equipped kitchen";
+  if (subject === "kutak za kafu") return "Apartman Dragićević - coffee corner";
+  if (subject === "dvorište") return "Apartman Dragićević - garden";
+  return subject.startsWith("enterijer apartmana")
+    ? `Apartman Dragićević - apartment interior ${subject.slice(-1)}`
+    : `Apartman Dragićević - ${subject}`;
+};
+
 export const gallery: GalleryItem[] = [
   { src: living, alt: "Apartman Dragićević - dnevni boravak", w: 1205, h: 1600 },
   { src: bedroom, alt: "Apartman Dragićević - spavaća soba", w: 1200, h: 1600 },

@@ -5,17 +5,28 @@ import logo from "@/assets/Logo_WEB 3.svg";
 import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-const links = [
-  { to: "/", label: "Početna" },
-  { to: "/o-nama", label: "O nama" },
-  { to: "/sadrzaj", label: "Sadržaj" },
-  { to: "/galerija", label: "Galerija" },
-  { to: "/kontakt", label: "Kontakt" },
-];
-
 export default function Navbar() {
   const { pathname } = useLocation();
   const isEnglish = pathname.startsWith("/en");
+  const routeName = pathname.replace(/^\/en\/?/, "").replace(/\/$/, "");
+  const languagePath = isEnglish
+    ? ({ about: "/o-nama", amenities: "/sadrzaj", gallery: "/galerija", contact: "/kontakt" }[routeName] ?? "/")
+    : ({ "o-nama": "/en/about/", sadrzaj: "/en/amenities/", galerija: "/en/gallery/", kontakt: "/en/contact/" }[routeName] ?? "/en/");
+  const links = isEnglish
+    ? [
+        { to: "/en/", label: "Home" },
+        { to: "/en/about/", label: "About" },
+        { to: "/en/amenities/", label: "Amenities" },
+        { to: "/en/gallery/", label: "Gallery" },
+        { to: "/en/contact/", label: "Contact" },
+      ]
+    : [
+        { to: "/", label: "Početna" },
+        { to: "/o-nama", label: "O nama" },
+        { to: "/sadrzaj", label: "Sadržaj" },
+        { to: "/galerija", label: "Galerija" },
+        { to: "/kontakt", label: "Kontakt" },
+      ];
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -49,7 +60,7 @@ export default function Navbar() {
             <NavLink
               key={l.to}
               to={l.to}
-              end={l.to === "/"}
+              end={l.to === "/" || l.to === "/en/"}
               className={({ isActive }) =>
                 cn(
                   "nav-underline-link px-4 py-2 rounded-full text-sm font-medium transition-colors",
@@ -66,7 +77,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2">
           <a
-            href={isEnglish ? "/" : "/en/"}
+            href={languagePath}
             lang={isEnglish ? "sr" : "en"}
             className="rounded-full px-3 py-2 text-sm font-semibold text-muted-foreground hover:text-foreground"
           >
@@ -76,12 +87,12 @@ export default function Navbar() {
             href={SITE.phoneHref}
             className="hidden sm:inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-5 py-2.5 rounded-full text-sm font-semibold shadow-card hover:shadow-glow transition-all duration-300 hover:-translate-y-0.5"
           >
-            <Phone className="h-4 w-4" /> Pozovite odmah
+            <Phone className="h-4 w-4" /> {isEnglish ? "Call now" : "Pozovite odmah"}
           </a>
           <button
             className="md:hidden h-10 w-10 rounded-full grid place-items-center bg-secondary"
             onClick={() => setOpen((v) => !v)}
-            aria-label="Meni"
+            aria-label={isEnglish ? "Menu" : "Meni"}
             aria-expanded={open}
             aria-controls="mobile-navigation"
           >
@@ -97,7 +108,7 @@ export default function Navbar() {
               <NavLink
                 key={l.to}
                 to={l.to}
-                end={l.to === "/"}
+                end={l.to === "/" || l.to === "/en/"}
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
                   cn(
@@ -110,7 +121,7 @@ export default function Navbar() {
               </NavLink>
             ))}
             <a
-              href={isEnglish ? "/" : "/en/"}
+              href={languagePath}
               lang={isEnglish ? "sr" : "en"}
               onClick={() => setOpen(false)}
               className="px-4 py-3 rounded-xl text-base font-medium text-muted-foreground"
@@ -121,7 +132,7 @@ export default function Navbar() {
               href={SITE.phoneHref}
               className="mt-2 inline-flex items-center justify-center gap-2 bg-gradient-accent text-accent-foreground px-5 py-3 rounded-full font-semibold"
             >
-              <Phone className="h-4 w-4" /> Pozovite odmah
+              <Phone className="h-4 w-4" /> {isEnglish ? "Call now" : "Pozovite odmah"}
             </a>
           </div>
         </div>

@@ -51,7 +51,7 @@ export default function Hero({ locale = "sr" }: { locale?: Locale }) {
             src={heroImageSrc}
             srcSet={heroImageSrcSet}
             sizes="100vw"
-            alt="Moderan dnevni boravak apartmana u Bogatiću"
+            alt={locale === "sr" ? "Moderan dnevni boravak apartmana u Bogatiću" : "Modern living room in the Bogatić apartment"}
             className="h-full w-full object-cover"
             width={1920}
             height={1080}
