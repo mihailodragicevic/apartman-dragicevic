@@ -133,6 +133,25 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
     assertThat(hreflang.get(language) === url, `${prefix} hreflang ${language} must point to ${url}.`);
   }
   assertThat(hreflang.size === 3, `${prefix} must have exactly sr, en and x-default alternates.`);
+  const languageSwitcher = document.querySelector(
+    `nav[aria-label="${lang === "en" ? "Language" : "Jezik"}"]`,
+  );
+  const languageLinks = [...(languageSwitcher?.querySelectorAll("a[href][lang][hreflang]") ?? [])];
+  const serbianLink = languageLinks.find((link) => link.getAttribute("hreflang") === "sr");
+  const englishLink = languageLinks.find((link) => link.getAttribute("hreflang") === "en");
+  assertThat(languageLinks.length === 2, `${prefix} language switcher must contain two real language links.`);
+  assertThat(
+    serbianLink?.getAttribute("href") === "/",
+    `${prefix} language switcher must include an <a href="/"> with hreflang="sr".`,
+  );
+  assertThat(
+    englishLink?.getAttribute("href") === "/en/",
+    `${prefix} language switcher must include an <a href="/en/"> with hreflang="en".`,
+  );
+  assertThat(
+    languageLinks.filter((link) => link.getAttribute("aria-current") === "page").length === 1,
+    `${prefix} language switcher must mark exactly one current language link.`,
+  );
   assertThat(
     document.querySelector('meta[name="robots"]')?.content.toLowerCase().includes("noindex") !== true,
     `${prefix} contains a noindex robots meta tag.`,
