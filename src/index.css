@@ -70,6 +70,40 @@
   }
 }
 
+@media (max-width: 1023px) {
+  main .container {
+    text-align: center;
+  }
+
+  main .container :is(.max-w-sm, .max-w-md, .max-w-lg, .max-w-xl, .max-w-2xl, .max-w-3xl, .max-w-4xl, .max-w-5xl) {
+    margin-inline: auto;
+  }
+
+  main .container .flex:not(.faq-question) {
+    justify-content: center;
+  }
+
+  main .container .flex.flex-col.gap-3 {
+    align-items: center;
+  }
+
+  main .container .flex.flex-col.gap-3 > a {
+    width: min(100%, 22rem);
+  }
+
+  main .container li.flex {
+    justify-content: center;
+  }
+
+  main .container img {
+    margin-inline: auto;
+  }
+
+  main .faq-answer p {
+    margin-inline: auto;
+  }
+}
+
 @layer components {
   .faq-grid {
     display: grid;
