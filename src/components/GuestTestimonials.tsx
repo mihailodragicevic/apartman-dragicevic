@@ -77,7 +77,7 @@ export default function GuestTestimonials({ locale = "sr" }: { locale?: "sr" | "
         opts={{ align: "center", loop: true }}
         className="reveal mt-12"
       >
-        <CarouselContent className="-ml-0">
+        <CarouselContent className="-ml-0 testimonial-carousel-track">
           {guestTestimonials.map((testimonial, index) => {
             const offset = getRelativeOffset(index, selectedIndex, guestTestimonials.length);
             const isActive = offset === 0;
@@ -86,14 +86,14 @@ export default function GuestTestimonials({ locale = "sr" }: { locale?: "sr" | "
             return (
               <CarouselItem
                 key={`${testimonial.author}-${index}`}
-                className="basis-[88%] pl-4 sm:basis-[78%] md:basis-[68%] lg:basis-[60%] xl:basis-[56%]"
+                className="basis-full pl-0 sm:basis-[88%] sm:pl-4 lg:basis-[60%] xl:basis-[56%]"
               >
                 <article
                   className={cn(
                     "testimonial-stage-card relative min-h-full rounded-[2rem] border border-border/80 bg-card p-6 shadow-soft transition-all duration-500 md:p-8",
                     isActive && "opacity-100 scale-100 translate-y-0",
-                    isNeighbor && "opacity-60 scale-[0.92] translate-y-5",
-                    !isActive && !isNeighbor && "opacity-20 scale-[0.86] translate-y-8",
+                    isNeighbor && "md:opacity-60 md:scale-[0.92] md:translate-y-5",
+                    !isActive && !isNeighbor && "md:opacity-20 md:scale-[0.86] md:translate-y-8",
                   )}
                   aria-hidden={!isActive}
                 >

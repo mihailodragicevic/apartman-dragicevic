@@ -79,8 +79,12 @@
     margin-inline: auto;
   }
 
-  main .container .flex:not(.faq-question) {
+  main .container .flex:not(.faq-question):not(.testimonial-carousel-track) {
     justify-content: center;
+  }
+
+  main .container .testimonial-carousel-track {
+    justify-content: flex-start;
   }
 
   main .container .flex.flex-col.gap-3 {
