@@ -104,11 +104,11 @@ export default function GuestTestimonials({ locale = "sr" }: { locale?: "sr" | "
                   <div className="flex flex-wrap items-start justify-between gap-4 pr-10">
                     <div>
                       <div className="font-display text-2xl leading-tight">{testimonial.author}</div>
-                      <p className="mt-1 text-sm uppercase tracking-[0.18em] text-muted-foreground">
+                      {testimonial.country && <p className="mt-1 text-sm uppercase tracking-[0.18em] text-muted-foreground">
                         {locale === "en"
                           ? ({ Srbija: "Serbia", Nemačka: "Germany", Holandija: "the Netherlands", Austrija: "Austria" }[testimonial.country] ?? testimonial.country)
                           : testimonial.country}
-                      </p>
+                      </p>}
                     </div>
 
                     <div className="rounded-full bg-accent-soft px-4 py-2 text-right">
@@ -138,6 +138,9 @@ export default function GuestTestimonials({ locale = "sr" }: { locale?: "sr" | "
                           "A warm welcome, excellent communication and a very tidy apartment. Everything we needed was available, and the stay felt very comfortable and relaxing.",
                           "The service was exceptionally good and everything was in perfect order. The cleanliness, peace and attention to detail left a very positive impression.",
                           "A central location, kind hosts and a very pleasant stay. Everything had a little extra care and warmth, which you notice right away.",
+                          "All praise! It has everything you need for a relaxing stay.",
+                          "Service, hospitality and cleanliness: a perfect ten! Excellent equipment, with attention paid to every detail.\nHighly recommended.",
+                          "An apartment to wish for 🥰👌 Everything is tip-top; no complaints, from the hospitality to the apartment’s amenities. See you soon 🍀👍",
                         ][index] ?? ""
                       : testimonial.paragraphs[0] ?? "").split("\n").map((paragraph, paragraphIndex) => (
                       <p key={paragraphIndex}>{paragraph}</p>
