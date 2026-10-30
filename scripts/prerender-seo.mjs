@@ -186,10 +186,10 @@ const faqSchema = (locale) => ({
   "@context": "https://schema.org",
   "@type": "FAQPage",
   inLanguage: locale,
-  mainEntity: geoContent.locales[locale].faq.map(([question, answer]) => ({
+  mainEntity: geoContent.faq.map(({ [locale]: content }) => ({
     "@type": "Question",
-    name: question,
-    acceptedAnswer: { "@type": "Answer", text: answer },
+    name: content.question,
+    acceptedAnswer: { "@type": "Answer", text: content.answer },
   })),
 });
 

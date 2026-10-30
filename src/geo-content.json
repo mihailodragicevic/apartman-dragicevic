@@ -57,6 +57,140 @@
       }
     }
   ],
+  "faq": [
+    {
+      "id": "kapacitet",
+      "sr": {
+        "question": "Za koliko osoba je Apartman Dragićević?",
+        "answer": "Apartman je prijavljen za najviše 4 osobe. Ima jednu spavaću sobu sa dva francuska ležaja, a u dnevnom boravku se nalazi ugaona garnitura na razvlačenje."
+      },
+      "en": {
+        "question": "How many guests can stay at Apartman Dragićević?",
+        "answer": "The apartment is registered for up to 4 guests. It has one bedroom with two double beds, and a corner sofa that unfolds in the living room."
+      }
+    },
+    {
+      "id": "cena",
+      "sr": {
+        "question": "Koliko košta noćenje u Apartmanu Dragićević?",
+        "answer": "Za direktnu rezervaciju (telefonom ili preko zahteva na sajtu) cena po noćenju je: 1 osoba 3.000 RSD, 2 osobe 5.200 RSD, 3 osobe 7.000 RSD, 4 osobe 9.000 RSD. Cene na Booking-u mogu da se razlikuju."
+      },
+      "en": {
+        "question": "How much does a night at Apartman Dragićević cost?",
+        "answer": "For direct bookings (by phone or via the request form on the website), the price per night is: 1 guest 3,000 RSD, 2 guests 5,200 RSD, 3 guests 7,000 RSD, 4 guests 9,000 RSD. Prices on Booking.com may differ."
+      }
+    },
+    {
+      "id": "rezervacija",
+      "sr": {
+        "question": "Kako mogu da rezervišem direktno?",
+        "answer": "Možete pozvati na +381 65 8103247 ili poslati zahtev preko forme na sajtu apartmandragicevic.com. Apartman je dostupan i na Booking-u."
+      },
+      "en": {
+        "question": "How can I book directly?",
+        "answer": "Call +381 65 8103247 or send a request through the form on apartmandragicevic.com. The apartment is also available on Booking.com."
+      }
+    },
+    {
+      "id": "check-in-check-out",
+      "sr": {
+        "question": "Kada je check-in i check-out?",
+        "answer": "Check-in je od 14:00, a check-out do 11:00 narednog dana."
+      },
+      "en": {
+        "question": "What are the check-in and check-out times?",
+        "answer": "Check-in is from 2:00 PM and check-out is until 11:00 AM the next day."
+      }
+    },
+    {
+      "id": "lokacija",
+      "sr": {
+        "question": "Gde se nalazi Apartman Dragićević?",
+        "answer": "Apartman je u Bogatiću, u Mačvi, na adresi Pavla Orlovića 11. Do centra Bogatića je 100 m, do autobuske stanice 450 m, do Šapca 21 km, a do aerodroma Nikola Tesla u Beogradu 89,4 km."
+      },
+      "en": {
+        "question": "Where is Apartman Dragićević located?",
+        "answer": "The apartment is in Bogatić, in the Mačva region of Serbia, at Pavla Orlovića 11. It is 100 m from the town center, 450 m from the bus station, 21 km from Šabac and 89.4 km from Belgrade Nikola Tesla Airport."
+      }
+    },
+    {
+      "id": "parking",
+      "sr": {
+        "question": "Da li apartman ima parking?",
+        "answer": "Da, parking je besplatan za sve goste."
+      },
+      "en": {
+        "question": "Is there parking?",
+        "answer": "Yes, parking is free for all guests."
+      }
+    },
+    {
+      "id": "klima-wifi",
+      "sr": {
+        "question": "Da li apartman ima klimu i Wi-Fi?",
+        "answer": "Da, apartman ima klimu, besplatan Wi-Fi i Smart TV."
+      },
+      "en": {
+        "question": "Does the apartment have air conditioning and Wi-Fi?",
+        "answer": "Yes, it has air conditioning, free Wi-Fi and a Smart TV."
+      }
+    },
+    {
+      "id": "kuhinja",
+      "sr": {
+        "question": "Da li je kuhinja opremljena?",
+        "answer": "Da, kuhinja je potpuno opremljena: indukciona ploča, mikrotalasna, frižider, kuvalo i pribor za jelo. Kafa i slatkiši su besplatni."
+      },
+      "en": {
+        "question": "Is the kitchen fully equipped?",
+        "answer": "Yes. The kitchen has an induction hob, microwave, refrigerator, electric kettle and cutlery and cookware. Coffee and sweets are free."
+      }
+    },
+    {
+      "id": "peskiri-posteljina",
+      "sr": {
+        "question": "Da li su peškiri i posteljina uključeni u cenu?",
+        "answer": "Da, svaki gost dobija čiste peškire, čistu posteljinu i higijenski set."
+      },
+      "en": {
+        "question": "Are towels and bed linen included?",
+        "answer": "Yes, every guest gets clean towels, clean bed linen and a hygiene kit."
+      }
+    },
+    {
+      "id": "ves-masina",
+      "sr": {
+        "question": "Da li apartman ima veš mašinu?",
+        "answer": "Da, apartman ima veš mašinu, kao i peglu sa daskom i fen za kosu."
+      },
+      "en": {
+        "question": "Is there a washing machine?",
+        "answer": "Yes, the apartment has a washing machine, an iron with ironing board, and a hair dryer."
+      }
+    },
+    {
+      "id": "dvoriste",
+      "sr": {
+        "question": "Da li apartman ima dvorište?",
+        "answer": "Da, gostima je na raspolaganju dvorište."
+      },
+      "en": {
+        "question": "Is there a yard or garden?",
+        "answer": "Yes, guests can use the yard."
+      }
+    },
+    {
+      "id": "ljubimci-pusenje",
+      "sr": {
+        "question": "Da li su kućni ljubimci i pušenje dozvoljeni?",
+        "answer": "Kućni ljubimci nisu dozvoljeni. Pušenje je dozvoljeno."
+      },
+      "en": {
+        "question": "Are pets and smoking allowed?",
+        "answer": "Pets are not allowed. Smoking is allowed."
+      }
+    }
+  ],
   "locales": {
     "sr": {
       "lang": "sr",
@@ -110,20 +244,6 @@
         ["2 osobe", "5.200 RSD"],
         ["3 osobe", "7.000 RSD"],
         ["4 osobe", "9.000 RSD"]
-      ],
-      "faq": [
-        ["Za koliko osoba je Apartman Dragićević?", "Apartman je prijavljen za najviše 4 osobe. Ima jednu spavaću sobu sa dva francuska ležaja, a u dnevnom boravku se nalazi ugaona garnitura na razvlačenje."],
-        ["Da li apartman ima parking?", "Da, parking je besplatan za sve goste."],
-        ["Da li apartman ima klimu i Wi-Fi?", "Da, apartman ima klimu, besplatan Wi-Fi i Smart TV."],
-        ["Da li je kuhinja opremljena?", "Da, kuhinja je potpuno opremljena: indukciona ploča, mikrotalasna, frižider, kuvalo i pribor za jelo. Kafa i slatkiši su besplatni."],
-        ["Da li su peškiri i posteljina uključeni u cenu?", "Da, svaki gost dobija čiste peškire, čistu posteljinu i higijenski set."],
-        ["Da li apartman ima veš mašinu?", "Da, apartman ima veš mašinu, kao i peglu sa daskom i fen za kosu."],
-        ["Da li apartman ima dvorište?", "Da, gostima je na raspolaganju dvorište."],
-        ["Gde se nalazi Apartman Dragićević?", "Apartman je u Bogatiću, u Mačvi, na adresi Pavla Orlovića 11. Do centra Bogatića je 100 m, do autobuske stanice 450 m, do Šapca 21 km, a do aerodroma Nikola Tesla u Beogradu 89,4 km."],
-        ["Kada je check-in i check-out?", "Check-in je od 14:00, a check-out do 11:00 narednog dana."],
-        ["Da li su kućni ljubimci dozvoljeni?", "Ne, kućni ljubimci nisu dozvoljeni."],
-        ["Da li je pušenje dozvoljeno?", "Da, pušenje je dozvoljeno."],
-        ["Kako mogu da rezervišem direktno?", "Možete pozvati na +381 65 8103247 ili poslati zahtev preko forme na sajtu apartmandragicevic.com. Apartman je dostupan i na Booking-u."]
       ]
     },
     "en": {
@@ -178,20 +298,6 @@
         ["2 guests", "5,200 RSD"],
         ["3 guests", "7,000 RSD"],
         ["4 guests", "9,000 RSD"]
-      ],
-      "faq": [
-        ["How many guests can stay at Apartman Dragićević?", "The apartment is registered for up to 4 guests. It has one bedroom with two double beds, and a corner sofa that unfolds in the living room."],
-        ["Is there parking?", "Yes, parking is free for all guests."],
-        ["Does the apartment have air conditioning and Wi-Fi?", "Yes, it has air conditioning, free Wi-Fi and a Smart TV."],
-        ["Is the kitchen fully equipped?", "Yes. The kitchen has an induction hob, microwave, refrigerator, electric kettle and cutlery and cookware. Coffee and sweets are free."],
-        ["Are towels and bed linen included?", "Yes, every guest gets clean towels, clean bed linen and a hygiene kit."],
-        ["Is there a washing machine?", "Yes, the apartment has a washing machine, an iron with ironing board, and a hair dryer."],
-        ["Is there a yard or garden?", "Yes, guests can use the yard."],
-        ["Where is Apartman Dragićević located?", "The apartment is in Bogatić, in the Mačva region of Serbia, at Pavla Orlovića 11. It is 100 m from the town center, 450 m from the bus station, 21 km from Šabac and 89.4 km from Belgrade Nikola Tesla Airport."],
-        ["What are the check-in and check-out times?", "Check-in is from 2:00 PM and check-out is until 11:00 AM the next day."],
-        ["Are pets allowed?", "No, pets are not allowed."],
-        ["Is smoking allowed?", "Yes, smoking is allowed."],
-        ["How can I book directly?", "Call +381 65 8103247 or send a request through the form on apartmandragicevic.com. The apartment is also available on Booking.com."]
       ]
     }
   }
