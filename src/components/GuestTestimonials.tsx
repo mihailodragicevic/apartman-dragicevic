@@ -106,7 +106,7 @@ export default function GuestTestimonials({ locale = "sr" }: { locale?: "sr" | "
                       <div className="font-display text-2xl leading-tight">{testimonial.author}</div>
                       {testimonial.country && <p className="mt-1 text-sm uppercase tracking-[0.18em] text-muted-foreground">
                         {locale === "en"
-                          ? ({ Srbija: "Serbia", Nemačka: "Germany", Holandija: "the Netherlands", Austrija: "Austria" }[testimonial.country] ?? testimonial.country)
+                          ? ({ Srbija: "Serbia", Slovenija: "Slovenia", Nemačka: "Germany", Holandija: "the Netherlands", Austrija: "Austria" }[testimonial.country] ?? testimonial.country)
                           : testimonial.country}
                       </p>}
                     </div>

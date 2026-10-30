@@ -64,19 +64,22 @@ export const guestTestimonials: GuestTestimonial[] = [
   },
   {
     author: "Miroslav Štrniša",
-    rating: 5,
+    country: "Slovenija",
+    rating: 10,
     paragraphs: ["Sve pohvale! Imate sve što je potrebno za odmor."],
   },
   {
     author: "Ratko Papić",
-    rating: 5,
+    country: "Srbija",
+    rating: 10,
     paragraphs: [
       "Usluga, gostoprimstvo, higijena, čista desetka! Odlično opremljeno, vodilo se računa o svakom detalju.\nTopla preporuka.",
     ],
   },
   {
     author: "Denis Ponjević",
-    rating: 5,
+    country: "Srbija",
+    rating: 10,
     paragraphs: [
       "Apartman za poželjeti 🥰👌 Sve tip top nemam zamjerke od gostoprimstva do sadrzaja apartmana, vidimo se uskoro 🍀👍",
     ],
