@@ -7,12 +7,17 @@ import { useReveal } from "@/hooks/useReveal";
 export default function Layout({ children }: { children: ReactNode }) {
   const { pathname, hash } = useLocation();
   useEffect(() => {
+    const root = document.documentElement;
+    const previousScrollBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+
     if (!hash) {
       window.scrollTo({ top: 0, behavior: "auto" });
-      return;
+    } else {
+      document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView({ behavior: "auto" });
     }
 
-    document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView({ behavior: "auto" });
+    root.style.scrollBehavior = previousScrollBehavior;
   }, [pathname, hash]);
   useReveal();
   return (
