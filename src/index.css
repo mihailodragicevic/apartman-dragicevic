@@ -91,6 +91,51 @@
     width: min(100%, 22rem);
   }
 
+  main .container :is(
+    .shadow-card,
+    .shadow-soft,
+    .faq-card,
+    [class*="rounded-2xl"][class*="bg-"],
+    [class*="rounded-3xl"][class*="bg-"],
+    [class*="rounded-[2rem]"][class*="bg-"],
+    form
+  ),
+  main .container :is(
+    .shadow-card,
+    .shadow-soft,
+    .faq-card,
+    [class*="rounded-2xl"][class*="bg-"],
+    [class*="rounded-3xl"][class*="bg-"],
+    [class*="rounded-[2rem]"][class*="bg-"],
+    form
+  ) * {
+    text-align: left;
+  }
+
+  main .container :is(
+    .shadow-card,
+    .shadow-soft,
+    .faq-card,
+    [class*="rounded-2xl"][class*="bg-"],
+    [class*="rounded-3xl"][class*="bg-"],
+    [class*="rounded-[2rem]"][class*="bg-"],
+    form
+  ) .flex:not(.faq-question) {
+    justify-content: flex-start;
+  }
+
+  main .container :is(
+    .shadow-card,
+    .shadow-soft,
+    .faq-card,
+    [class*="rounded-2xl"][class*="bg-"],
+    [class*="rounded-3xl"][class*="bg-"],
+    [class*="rounded-[2rem]"][class*="bg-"],
+    form
+  ) .flex.flex-col:not(.faq-question) {
+    align-items: flex-start;
+  }
+
   main .container li.flex {
     justify-content: center;
   }
