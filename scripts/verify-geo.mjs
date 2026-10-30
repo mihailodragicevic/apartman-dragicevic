@@ -12,7 +12,7 @@ const distDir = path.join(projectDir, "dist");
 const siteUrl = "https://apartmandragicevic.com";
 const expectedFaqIds = [
   "kapacitet",
-  "cena",
+  "deca-besplatno",
   "rezervacija",
   "check-in-check-out",
   "lokacija",
@@ -27,7 +27,7 @@ const expectedFaqIds = [
 const expectedFaqQuestions = {
   sr: [
     "Za koliko osoba je Apartman Dragićević?",
-    "Koliko košta noćenje u Apartmanu Dragićević?",
+    "Da li deca borave besplatno?",
     "Kako mogu da rezervišem direktno?",
     "Kada je check-in i check-out?",
     "Gde se nalazi Apartman Dragićević?",
@@ -41,7 +41,7 @@ const expectedFaqQuestions = {
   ],
   en: [
     "How many guests can stay at Apartman Dragićević?",
-    "How much does a night at Apartman Dragićević cost?",
+    "Do children stay for free?",
     "How can I book directly?",
     "What are the check-in and check-out times?",
     "Where is Apartman Dragićević located?",
@@ -263,8 +263,8 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
   assertThat(!serializedFaq.toLowerCase().includes("airbnb"), `${prefix} FAQPage JSON-LD contains a forbidden brand reference.`);
   assertThat(!containsPlaceholder(faqPage), `${prefix} FAQPage JSON-LD contains a placeholder.`);
   const criticalFaqFacts = lang === "sr"
-    ? ["3.000 RSD", "5.200 RSD", "7.000 RSD", "9.000 RSD", "+381 65 8103247", "14:00", "11:00", "Pavla Orlovića 11", "100 m", "450 m", "21 km", "89,4 km", "Kućni ljubimci nisu dozvoljeni. Pušenje je dozvoljeno."]
-    : ["3,000 RSD", "5,200 RSD", "7,000 RSD", "9,000 RSD", "+381 65 8103247", "2:00 PM", "11:00 AM", "Pavla Orlovića 11", "100 m", "450 m", "21 km", "89.4 km", "Pets are not allowed. Smoking is allowed."];
+    ? ["+381 65 8103247", "14:00", "11:00", "Pavla Orlovića 11", "100 m", "450 m", "21 km", "89,4 km", "Deca od 0 do 7 godina borave besplatno.", "Kućni ljubimci nisu dozvoljeni. Pušenje je dozvoljeno."]
+    : ["+381 65 8103247", "2:00 PM", "11:00 AM", "Pavla Orlovića 11", "100 m", "450 m", "21 km", "89.4 km", "Children aged 0 to 7 stay for free.", "Pets are not allowed. Smoking is allowed."];
   for (const fact of criticalFaqFacts) {
     assertThat(serializedFaq.includes(fact), `${prefix} FAQ is missing required fact "${fact}".`);
   }

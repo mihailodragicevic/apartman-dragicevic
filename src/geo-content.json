@@ -70,14 +70,14 @@
       }
     },
     {
-      "id": "cena",
+      "id": "deca-besplatno",
       "sr": {
-        "question": "Koliko košta noćenje u Apartmanu Dragićević?",
-        "answer": "Za direktnu rezervaciju (telefonom ili preko zahteva na sajtu) cena po noćenju je: 1 osoba 3.000 RSD, 2 osobe 5.200 RSD, 3 osobe 7.000 RSD, 4 osobe 9.000 RSD. Cene na Booking-u mogu da se razlikuju."
+        "question": "Da li deca borave besplatno?",
+        "answer": "Deca od 0 do 7 godina borave besplatno."
       },
       "en": {
-        "question": "How much does a night at Apartman Dragićević cost?",
-        "answer": "For direct bookings (by phone or via the request form on the website), the price per night is: 1 guest 3,000 RSD, 2 guests 5,200 RSD, 3 guests 7,000 RSD, 4 guests 9,000 RSD. Prices on Booking.com may differ."
+        "question": "Do children stay for free?",
+        "answer": "Children aged 0 to 7 stay for free."
       }
     },
     {
