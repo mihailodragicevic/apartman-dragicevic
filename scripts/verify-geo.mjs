@@ -117,6 +117,20 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
     document.querySelector('link[rel="canonical"]')?.href === canonical,
     `${prefix} canonical must be ${canonical}.`,
   );
+  assertThat(
+    document.querySelector("header img")?.getAttribute("fetchpriority") === "high",
+    `${prefix} header logo must be requested with high fetch priority.`,
+  );
+  if (routePath === "/" || routePath === "/en/") {
+    const heroPreloads = [...document.querySelectorAll('link[rel="preload"][as="image"]')];
+    assertThat(heroPreloads.length === 1, `${prefix} must preload exactly one hero image.`);
+    assertThat(
+      heroPreloads[0].getAttribute("type") === "image/webp" &&
+        heroPreloads[0].getAttribute("imagesrcset")?.includes("apartman-bogatic-hero-dnevni-boravak-640.webp") &&
+        heroPreloads[0].getAttribute("fetchpriority") === "high",
+      `${prefix} must high-priority preload the responsive WebP hero image.`,
+    );
+  }
 
   const hreflang = new Map(
     [...document.querySelectorAll('link[rel="alternate"][hreflang]')].map((link) => [
@@ -356,6 +370,10 @@ const verifyOtherRoutes = async () => {
       const expectedSr = `${siteUrl}${serbianPath}`;
       const expectedEn = `${siteUrl}${englishPath}`;
       assertThat(document.documentElement.lang === lang, `${prefix} has the wrong document language.`);
+      assertThat(
+        document.querySelector("header img")?.getAttribute("fetchpriority") === "high",
+        `${prefix} header logo must be requested with high fetch priority.`,
+      );
       assertThat(Boolean(document.title.trim()), `${prefix} is missing its title.`);
       assertThat(
         document.querySelector('meta[name="description"]')?.content.length >= 50,

@@ -153,10 +153,14 @@
     -webkit-backdrop-filter: saturate(180%) blur(14px);
   }
   .reveal {
-    opacity: 0;
-    transform: translateY(24px);
+    opacity: 1;
+    transform: none;
     transition: opacity 0.9s var(--transition-smooth), transform 0.9s var(--transition-smooth);
     will-change: transform, opacity;
+  }
+  .reveal-ready .reveal:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(24px);
   }
   .reveal.is-visible { opacity: 1; transform: translateY(0); }
 }
@@ -373,6 +377,11 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .reveal-ready .reveal:not(.is-visible) {
+    opacity: 1;
+    transform: none;
   }
 
   .testimonial-stage-card {

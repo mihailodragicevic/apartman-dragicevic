@@ -1,12 +1,6 @@
 import { useEffect } from "react";
 import { SITE } from "@/lib/site";
 
-type ImagePreload = {
-  href: string;
-  srcSet?: string;
-  sizes?: string;
-};
-
 type SeoProps = {
   title: string;
   description: string;
@@ -16,7 +10,6 @@ type SeoProps = {
   type?: "website" | "article";
   noIndex?: boolean;
   htmlLang?: string;
-  preloadImage?: ImagePreload;
   schema?: Array<Record<string, unknown>>;
 };
 
@@ -45,7 +38,6 @@ export default function Seo({
   type = "website",
   noIndex = false,
   htmlLang = SITE.htmlLang,
-  preloadImage,
   schema = [],
 }: SeoProps) {
   useEffect(() => {
@@ -128,25 +120,10 @@ export default function Seo({
       managedSchemas.push(script);
     });
 
-    const preloadLink = preloadImage
-      ? (() => {
-          const link = document.createElement("link");
-          link.rel = "preload";
-          link.as = "image";
-          link.href = preloadImage.href;
-          if (preloadImage.srcSet) link.setAttribute("imagesrcset", preloadImage.srcSet);
-          if (preloadImage.sizes) link.setAttribute("imagesizes", preloadImage.sizes);
-          link.dataset.seoManaged = "true";
-          document.head.appendChild(link);
-          return link;
-        })()
-      : null;
-
     return () => {
       managedSchemas.forEach((script) => script.remove());
-      preloadLink?.remove();
     };
-  }, [description, htmlLang, image, imageAlt, noIndex, path, preloadImage, schema, title, type]);
+  }, [description, htmlLang, image, imageAlt, noIndex, path, schema, title, type]);
 
   return null;
 }

@@ -3,9 +3,24 @@ import { useEffect } from "react";
 export function useReveal() {
   useEffect(() => {
     const els = document.querySelectorAll<HTMLElement>(".reveal");
+    const root = document.documentElement;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const visibleEls = [...els].filter((el) => {
+      const bounds = el.getBoundingClientRect();
+      return bounds.top < window.innerHeight && bounds.bottom > 0;
+    });
+
+    visibleEls.forEach((el) => el.classList.add("is-visible"));
+    root.classList.add("reveal-ready");
+
+    if (prefersReducedMotion) {
+      els.forEach((el) => el.classList.add("is-visible"));
+      return () => root.classList.remove("reveal-ready");
+    }
+
     if (!("IntersectionObserver" in window)) {
       els.forEach((el) => el.classList.add("is-visible"));
-      return;
+      return () => root.classList.remove("reveal-ready");
     }
     const io = new IntersectionObserver(
       (entries) => {
@@ -18,7 +33,12 @@ export function useReveal() {
       },
       { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
     );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    els.forEach((el) => {
+      if (!el.classList.contains("is-visible")) io.observe(el);
+    });
+    return () => {
+      io.disconnect();
+      root.classList.remove("reveal-ready");
+    };
   }, []);
 }

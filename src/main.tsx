@@ -1,10 +1,10 @@
-import { createRoot } from "react-dom/client";
+import { hydrateRoot } from "react-dom/client";
 import { Analytics } from "@vercel/analytics/react";
 import "./fonts.css";
 import App from "./App.tsx";
 import "./index.css";
 
-createRoot(document.getElementById("root")!).render(
+hydrateRoot(document.getElementById("root")!,
   <>
     <App />
     <Analytics />

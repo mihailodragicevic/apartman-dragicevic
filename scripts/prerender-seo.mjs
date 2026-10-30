@@ -9,6 +9,7 @@ import geoContent from "../src/geo-content.json" with { type: "json" };
 const siteUrl = "https://apartmandragicevic.com";
 const ogImage = `${siteUrl}/og/apartman-dragicevic-og.jpg`;
 const distDir = path.resolve("dist");
+const heroImagePreload = `<link rel="preload" as="image" type="image/webp" fetchpriority="high" href="/images/hero/apartman-bogatic-hero-dnevni-boravak-1600.webp" imagesrcset="/images/hero/apartman-bogatic-hero-dnevni-boravak-640.webp 640w, /images/hero/apartman-bogatic-hero-dnevni-boravak-960.webp 960w, /images/hero/apartman-bogatic-hero-dnevni-boravak-1280.webp 1280w, /images/hero/apartman-bogatic-hero-dnevni-boravak-1600.webp 1600w" imagesizes="100vw" />`;
 
 const pages = [
   {
@@ -295,7 +296,7 @@ const renderPage = (template, page) => {
     const schemas = [rentalSchema(page.locale), faqSchema(page.locale)]
       .map((schema) => `<script type="application/ld+json">${JSON.stringify(schema)}</script>`)
       .join("\n    ");
-    html = html.replace("</head>", `${schemas}\n    </head>`);
+    html = html.replace("</head>", `${heroImagePreload}\n    ${schemas}\n    </head>`);
   }
 
   return html;
@@ -323,7 +324,11 @@ const main = async () => {
             React.Fragment,
             null,
             React.createElement(Navbar),
-            React.createElement(Page),
+            React.createElement(
+              React.Suspense,
+              { fallback: React.createElement("div", { className: "min-h-screen bg-background", "aria-hidden": true }) },
+              React.createElement(Page),
+            ),
           ),
         ),
       );

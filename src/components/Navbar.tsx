@@ -160,6 +160,8 @@ export default function Navbar() {
             className="h-10 w-auto sm:h-12"
             width={173}
             height={120}
+            fetchPriority="high"
+            decoding="async"
           />
         </Link>
 

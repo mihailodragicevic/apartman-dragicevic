@@ -8,7 +8,6 @@ import GalleryPreview from "@/components/GalleryPreview";
 import GuestTestimonials from "@/components/GuestTestimonials";
 import ReviewSection from "@/components/ReviewSection";
 import Seo from "@/components/Seo";
-import { heroImage } from "@/lib/media";
 import { pageSeo } from "@/lib/seo";
 
 export default function Index() {
@@ -17,11 +16,6 @@ export default function Index() {
       <Seo
         {...pageSeo.home}
         schema={[]}
-        preloadImage={{
-          href: heroImage.src,
-          srcSet: heroImage.srcSet,
-          sizes: "100vw",
-        }}
       />
       <Hero />
       <Features />
