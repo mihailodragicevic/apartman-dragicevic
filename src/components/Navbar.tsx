@@ -6,41 +6,86 @@ import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 function LanguageSwitcher({
-  href,
+  currentHref,
+  otherLanguageHref,
   isEnglish,
-  onClick,
 }: {
-  href: string;
+  currentHref: string;
+  otherLanguageHref: string;
   isEnglish: boolean;
-  onClick?: () => void;
 }) {
+  const prefetchPage = (href: string) => {
+    const url = new URL(href, window.location.href);
+    url.hash = "";
+    const alreadyPrefetched = [...document.head.querySelectorAll<HTMLLinkElement>('link[rel="prefetch"]')]
+      .some((link) => link.href === url.href);
+    if (alreadyPrefetched) return;
+
+    const link = document.createElement("link");
+    link.rel = "prefetch";
+    link.href = url.href;
+    document.head.appendChild(link);
+  };
+
+  const optionClassName = (isCurrent: boolean) =>
+    cn(
+      "relative z-10 inline-flex h-full w-12 md:w-14 items-center justify-center rounded-full text-xs font-semibold uppercase tracking-[0.06em] transition-[color,transform] duration-150 ease-out active:scale-[0.97] focus-visible:z-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+      isCurrent
+        ? "text-primary-foreground"
+        : "text-foreground/80 hover:text-foreground",
+    );
+
   return (
-    <a
-      href={href}
-      lang={isEnglish ? "sr" : "en"}
-      aria-label={isEnglish ? "Switch language to Serbian" : "Switch language to English"}
-      onClick={onClick}
-      className="relative inline-flex h-10 w-[76px] shrink-0 items-center rounded-full bg-secondary p-1 transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+    <nav
+      aria-label={isEnglish ? "Language" : "Jezik"}
+      className="language-switcher relative inline-flex h-12 w-24 md:w-28 shrink-0 items-center overflow-hidden rounded-full border border-white/70 bg-[hsl(40_33%_98%/0.9)] shadow-card backdrop-blur-md transition-colors hover:border-accent/50 hover:bg-[hsl(40_33%_98%/0.96)]"
     >
-      <span className={cn(
-        "absolute left-1 z-10 grid h-8 w-8 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-sm transition-transform duration-300 ease-out",
-        isEnglish && "translate-x-9",
-      )}>
-        {isEnglish ? "EN" : "SR"}
-      </span>
-      <span className={cn("absolute left-2 text-xs font-semibold text-muted-foreground", isEnglish && "opacity-40")}>SR</span>
-      <span className={cn("absolute right-2 text-xs font-semibold text-muted-foreground", !isEnglish && "opacity-40")}>EN</span>
-    </a>
+      <span
+        aria-hidden="true"
+        className={cn(
+          "language-switcher-thumb absolute left-1 top-1 bottom-1 z-0 w-11 md:w-[52px] rounded-full bg-primary shadow-sm transition-transform duration-300 ease-out",
+          isEnglish && "translate-x-11 md:translate-x-[52px]",
+        )}
+      />
+      <a
+        href={isEnglish ? otherLanguageHref : currentHref}
+        lang="sr"
+        hrefLang="sr"
+        aria-label={isEnglish ? "Prebaci na srpski" : "Srpski, trenutni jezik"}
+        aria-current={isEnglish ? undefined : "page"}
+        className={optionClassName(!isEnglish)}
+        onPointerEnter={() => isEnglish && prefetchPage(otherLanguageHref)}
+        onFocus={() => isEnglish && prefetchPage(otherLanguageHref)}
+        onTouchStart={() => isEnglish && prefetchPage(otherLanguageHref)}
+      >
+        SR
+      </a>
+      <a
+        href={isEnglish ? currentHref : otherLanguageHref}
+        lang="en"
+        hrefLang="en"
+        aria-label={isEnglish ? "English, current language" : "Switch to English"}
+        aria-current={isEnglish ? "page" : undefined}
+        className={optionClassName(isEnglish)}
+        onPointerEnter={() => !isEnglish && prefetchPage(otherLanguageHref)}
+        onFocus={() => !isEnglish && prefetchPage(otherLanguageHref)}
+        onTouchStart={() => !isEnglish && prefetchPage(otherLanguageHref)}
+      >
+        EN
+      </a>
+    </nav>
   );
 }
 
 export default function Navbar() {
-  const { pathname } = useLocation();
+  const { pathname, search, hash } = useLocation();
   const isEnglish = pathname.startsWith("/en");
   const routeName = pathname.replace(/^\/en\/?/, "").replace(/\/$/, "");
   const languagePath = isEnglish
     ? ({ about: "/o-nama", amenities: "/sadrzaj", gallery: "/galerija", contact: "/kontakt" }[routeName] ?? "/")
     : ({ "o-nama": "/en/about/", sadrzaj: "/en/amenities/", galerija: "/en/gallery/", kontakt: "/en/contact/" }[routeName] ?? "/en/");
+  const currentHref = `${pathname}${search}${hash}`;
+  const otherLanguageHref = `${languagePath}${search}${hash}`;
   const links = isEnglish
     ? [
         { to: "/en/", label: "Home" },
@@ -105,7 +150,13 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <LanguageSwitcher href={languagePath} isEnglish={isEnglish} />
+          <div className={cn(open && "max-md:hidden")}>
+            <LanguageSwitcher
+              currentHref={currentHref}
+              otherLanguageHref={otherLanguageHref}
+              isEnglish={isEnglish}
+            />
+          </div>
           <a
             href={SITE.phoneHref}
             className="hidden sm:inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-5 py-2.5 rounded-full text-sm font-semibold shadow-card hover:shadow-glow transition-all duration-300 hover:-translate-y-0.5"
@@ -113,7 +164,7 @@ export default function Navbar() {
             <Phone className="h-4 w-4" /> {isEnglish ? "Call now" : "Pozovite odmah"}
           </a>
           <button
-            className="md:hidden h-10 w-10 rounded-full grid place-items-center bg-secondary"
+            className="md:hidden h-11 w-11 rounded-full grid place-items-center bg-secondary"
             onClick={() => setOpen((v) => !v)}
             aria-label={isEnglish ? "Menu" : "Meni"}
             aria-expanded={open}
@@ -144,7 +195,11 @@ export default function Navbar() {
               </NavLink>
             ))}
             <div className="px-4 py-2">
-              <LanguageSwitcher href={languagePath} isEnglish={isEnglish} onClick={() => setOpen(false)} />
+              <LanguageSwitcher
+                currentHref={currentHref}
+                otherLanguageHref={otherLanguageHref}
+                isEnglish={isEnglish}
+              />
             </div>
             <a
               href={SITE.phoneHref}

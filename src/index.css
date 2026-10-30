@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 250ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-group(language-switcher),
+::view-transition-group(language-switcher-thumb) {
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 @layer base {
   :root {
     --background: 40 33% 98%;
@@ -159,6 +175,25 @@
     will-change: transform, opacity;
   }
   .reveal.is-visible { opacity: 1; transform: translateY(0); }
+}
+
+.language-switcher {
+  view-transition-name: language-switcher;
+}
+
+.language-switcher-thumb {
+  view-transition-name: language-switcher-thumb;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
+  .language-switcher,
+  .language-switcher-thumb {
+    transition: none;
+  }
 }
 
 @keyframes fade-in-up {
