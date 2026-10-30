@@ -10,6 +10,50 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectDir = path.resolve(scriptDir, "..");
 const distDir = path.join(projectDir, "dist");
 const siteUrl = "https://apartmandragicevic.com";
+const expectedFaqIds = [
+  "kapacitet",
+  "cena",
+  "rezervacija",
+  "check-in-check-out",
+  "lokacija",
+  "parking",
+  "klima-wifi",
+  "kuhinja",
+  "peskiri-posteljina",
+  "ves-masina",
+  "dvoriste",
+  "ljubimci-pusenje",
+];
+const expectedFaqQuestions = {
+  sr: [
+    "Za koliko osoba je Apartman Dragićević?",
+    "Koliko košta noćenje u Apartmanu Dragićević?",
+    "Kako mogu da rezervišem direktno?",
+    "Kada je check-in i check-out?",
+    "Gde se nalazi Apartman Dragićević?",
+    "Da li apartman ima parking?",
+    "Da li apartman ima klimu i Wi-Fi?",
+    "Da li je kuhinja opremljena?",
+    "Da li su peškiri i posteljina uključeni u cenu?",
+    "Da li apartman ima veš mašinu?",
+    "Da li apartman ima dvorište?",
+    "Da li su kućni ljubimci i pušenje dozvoljeni?",
+  ],
+  en: [
+    "How many guests can stay at Apartman Dragićević?",
+    "How much does a night at Apartman Dragićević cost?",
+    "How can I book directly?",
+    "What are the check-in and check-out times?",
+    "Where is Apartman Dragićević located?",
+    "Is there parking?",
+    "Does the apartment have air conditioning and Wi-Fi?",
+    "Is the kitchen fully equipped?",
+    "Are towels and bed linen included?",
+    "Is there a washing machine?",
+    "Is there a yard or garden?",
+    "Are pets and smoking allowed?",
+  ],
+};
 const routes = [
   { path: "/", file: path.join(distDir, "index.html"), lang: "sr" },
   { path: "/en/", file: path.join(distDir, "en", "index.html"), lang: "en" },
@@ -100,20 +144,54 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
   assertThat(document.querySelectorAll("h1").length === 1, `${prefix} must contain exactly one H1.`);
   assertThat(document.querySelectorAll("img:not([alt]), img[alt='']").length === 0, `${prefix} contains an image with missing alt text.`);
   assertThat(document.querySelectorAll("table").length === 0, `${prefix} unexpectedly contains a facts or prices table.`);
+  assertThat(geoContent.faq.length === 12, "the shared FAQ data source must contain exactly 12 questions.");
+  assertThat(geoContent.faq.every((item, index) => item.id === expectedFaqIds[index]), "FAQ IDs are missing, duplicated, or out of order.");
+  const faqSection = document.querySelector("#faq");
+  assertThat(faqSection?.getAttribute("aria-labelledby") === "faq-heading", `${prefix} FAQ section must reference its heading.`);
   assertThat(
-    document.querySelectorAll("#faq details").length === geoContent.locales[lang].faq.length,
-    `${prefix} must render every localized FAQ item as a native details disclosure.`,
+    normalize(faqSection?.querySelector("h2")?.textContent ?? "") ===
+      (lang === "sr" ? "Česta pitanja" : "Frequently asked questions"),
+    `${prefix} FAQ heading is missing or incorrect.`,
   );
   assertThat(
-    [...document.querySelectorAll("#faq details")].every((item) => item.getAttribute("name") === "apartment-faq"),
-    `${prefix} FAQ cards must share one exclusive disclosure group.`,
+    faqSection?.querySelectorAll(".faq-column").length === 2,
+    `${prefix} FAQ must render two independent columns.`,
   );
-  assertThat(document.querySelector("#faq .reveal") !== null, `${prefix} FAQ section is missing its reveal animation.`);
-  assertThat(document.querySelector("#faq .hover\\:-translate-y-1") !== null, `${prefix} FAQ cards are missing their hover effect.`);
-  assertThat(document.querySelector("#faq .md\\:columns-2") !== null, `${prefix} FAQ section is missing its independent responsive columns.`);
+  const faqColumns = [...(faqSection?.querySelectorAll(".faq-column") ?? [])];
   assertThat(
-    [...document.querySelectorAll("#faq details")].every((item) => item.classList.contains("break-inside-avoid")),
-    `${prefix} FAQ cards must not split or stretch to match adjacent cards.`,
+    faqColumns.length === 2 &&
+      faqColumns[0].querySelectorAll("details").length === 6 &&
+      faqColumns[1].querySelectorAll("details").length === 6,
+    `${prefix} FAQ columns must each contain six cards.`,
+  );
+  const faqCards = [...(faqSection?.querySelectorAll("details") ?? [])];
+  assertThat(faqCards.length === 12, `${prefix} FAQ must contain exactly 12 native details cards.`);
+  assertThat(faqCards.every((card) => !card.open && !card.hasAttribute("name")), `${prefix} FAQ cards must be closed by default and allow multiple openings.`);
+  assertThat(
+    faqCards.map((card) => card.id).join(",") === expectedFaqIds.map((id) => `faq-${id}`).join(","),
+    `${prefix} FAQ cards must have stable IDs in the requested DOM order.`,
+  );
+  assertThat(
+    normalize(faqSection?.querySelector("h2 + p")?.textContent ?? "").length > 0,
+    `${prefix} FAQ heading must have an introductory sentence.`,
+  );
+  for (const [index, card] of faqCards.entries()) {
+    const item = geoContent.faq[index];
+    const content = item[lang];
+    const question = normalize(card.querySelector("summary")?.textContent ?? "");
+    const answer = normalize(card.querySelector(".faq-answer")?.textContent ?? "");
+    assertThat(question === expectedFaqQuestions[lang][index], `${prefix} FAQ question ${index + 1} is incorrect or out of order.`);
+    assertThat(question === normalize(content.question), `${prefix} FAQ question is not from the shared bilingual data: ${question}`);
+    assertThat(answer === normalize(content.answer), `${prefix} FAQ answer is missing from static HTML or differs from the shared data: ${question}`);
+  }
+  const faqRequestHref = lang === "sr" ? "/kontakt/" : "/en/contact/";
+  assertThat(
+    Boolean(faqSection?.querySelector(`a[href="${faqRequestHref}"]`)),
+    `${prefix} FAQ request CTA must point to the existing booking form.`,
+  );
+  assertThat(
+    Boolean(faqSection?.querySelector('a[href="tel:+381658103247"]')),
+    `${prefix} FAQ call CTA must use the booking phone number.`,
   );
   assertThat(document.querySelectorAll("#root img").length >= 6, `${prefix} is missing static homepage sections and images.`);
   for (const requiredText of [
@@ -164,19 +242,31 @@ const verifyRoute = async ({ path: routePath, file, lang }) => {
   assertThat(Boolean(faqPage), `${prefix} is missing FAQPage JSON-LD.`);
   assertThat(faqPage.inLanguage === lang, `${prefix} FAQPage language must match the route.`);
   assertThat(
-    faqPage.mainEntity.length === geoContent.locales[lang].faq.length,
-    `${prefix} FAQPage must include every visible FAQ.`,
+    faqPage.mainEntity.length === 12,
+    `${prefix} FAQPage must contain exactly 12 questions.`,
   );
-  for (const [[question, answer], structuredQuestion] of geoContent.locales[lang].faq.map(
-    (item, index) => [item, faqPage.mainEntity[index]],
-  )) {
+  for (const [index, item] of geoContent.faq.entries()) {
+    const { question, answer } = item[lang];
+    const structuredQuestion = faqPage.mainEntity[index];
     assertThat(
-      structuredQuestion.name === question &&
-        structuredQuestion.acceptedAnswer.text === answer,
+      structuredQuestion.name === question && structuredQuestion.acceptedAnswer.text === answer,
       `${prefix} FAQ JSON-LD does not match the visible FAQ content: ${question}`,
     );
     assertThat(bodyText.includes(normalize(question)), `${prefix} visible FAQ question is missing: ${question}`);
     assertThat(bodyText.includes(normalize(answer)), `${prefix} visible FAQ answer is missing: ${question}`);
+  }
+  assertThat(
+    faqPage.mainEntity.map((question) => normalize(question.name)).join("|") === expectedFaqQuestions[lang].join("|"),
+    `${prefix} JSON-LD questions are missing or out of order.`,
+  );
+  const serializedFaq = JSON.stringify(faqPage);
+  assertThat(!serializedFaq.toLowerCase().includes("airbnb"), `${prefix} FAQPage JSON-LD contains a forbidden brand reference.`);
+  assertThat(!containsPlaceholder(faqPage), `${prefix} FAQPage JSON-LD contains a placeholder.`);
+  const criticalFaqFacts = lang === "sr"
+    ? ["3.000 RSD", "5.200 RSD", "7.000 RSD", "9.000 RSD", "+381 65 8103247", "14:00", "11:00", "Pavla Orlovića 11", "100 m", "450 m", "21 km", "89,4 km", "Kućni ljubimci nisu dozvoljeni. Pušenje je dozvoljeno."]
+    : ["3,000 RSD", "5,200 RSD", "7,000 RSD", "9,000 RSD", "+381 65 8103247", "2:00 PM", "11:00 AM", "Pavla Orlovića 11", "100 m", "450 m", "21 km", "89.4 km", "Pets are not allowed. Smoking is allowed."];
+  for (const fact of criticalFaqFacts) {
+    assertThat(serializedFaq.includes(fact), `${prefix} FAQ is missing required fact "${fact}".`);
   }
 
   const additionalProperties = new Map(
@@ -256,6 +346,9 @@ const verifyOtherRoutes = async () => {
         document.querySelector('link[rel="canonical"]')?.href === `${siteUrl}${routePath}`,
         `${prefix} has the wrong canonical URL.`,
       );
+      if (routePath === "/kontakt/" || routePath === "/en/contact/") {
+        assertThat(document.querySelector("form") !== null, `${prefix} is missing the booking request form targeted by the FAQ CTA.`);
+      }
       assertThat(alternates.get("sr") === expectedSr, `${prefix} has the wrong sr hreflang alternate.`);
       assertThat(alternates.get("en") === expectedEn, `${prefix} has the wrong en hreflang alternate.`);
       assertThat(alternates.get("x-default") === expectedSr, `${prefix} has the wrong x-default alternate.`);
