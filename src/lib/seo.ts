@@ -71,7 +71,7 @@ export const pageSeo: Record<"home" | "about" | "amenities" | "gallery" | "conta
     path: "/galerija",
   },
   contact: {
-    title: "Kontakt i rezervacije | Apartman Dragićević Bogatić",
+    title: "Rezervacija | Apartman Dragićević Bogatić",
     description:
       "Kontaktirajte Apartman Dragićević u Bogatiću za rezervacije, proveru dostupnosti, adresu, mapu, email i direktan telefonski poziv.",
     path: "/kontakt",

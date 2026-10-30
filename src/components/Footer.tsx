@@ -18,7 +18,7 @@ export default function Footer() {
         ["/o-nama", "O nama"],
         ["/sadrzaj", "Sadržaj"],
         ["/galerija", "Galerija"],
-        ["/kontakt", "Kontakt"],
+        ["/kontakt", "Rezervacija"],
       ];
   return (
     <footer className="mt-24 border-t border-border bg-secondary/40">

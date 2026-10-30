@@ -5,6 +5,35 @@ import logo from "@/assets/Logo_WEB 3.svg";
 import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
+function LanguageSwitcher({
+  href,
+  isEnglish,
+  onClick,
+}: {
+  href: string;
+  isEnglish: boolean;
+  onClick?: () => void;
+}) {
+  return (
+    <a
+      href={href}
+      lang={isEnglish ? "sr" : "en"}
+      aria-label={isEnglish ? "Switch language to Serbian" : "Switch language to English"}
+      onClick={onClick}
+      className="relative inline-flex h-10 w-[76px] shrink-0 items-center rounded-full bg-secondary p-1 transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+    >
+      <span className={cn(
+        "absolute left-1 z-10 grid h-8 w-8 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-sm transition-transform duration-300 ease-out",
+        isEnglish && "translate-x-9",
+      )}>
+        {isEnglish ? "EN" : "SR"}
+      </span>
+      <span className={cn("absolute left-2 text-xs font-semibold text-muted-foreground", isEnglish && "opacity-40")}>SR</span>
+      <span className={cn("absolute right-2 text-xs font-semibold text-muted-foreground", !isEnglish && "opacity-40")}>EN</span>
+    </a>
+  );
+}
+
 export default function Navbar() {
   const { pathname } = useLocation();
   const isEnglish = pathname.startsWith("/en");
@@ -25,7 +54,7 @@ export default function Navbar() {
         { to: "/o-nama", label: "O nama" },
         { to: "/sadrzaj", label: "Sadržaj" },
         { to: "/galerija", label: "Galerija" },
-        { to: "/kontakt", label: "Kontakt" },
+        { to: "/kontakt", label: "Rezervacija" },
       ];
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -76,13 +105,7 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <a
-            href={languagePath}
-            lang={isEnglish ? "sr" : "en"}
-            className="rounded-full px-3 py-2 text-sm font-semibold text-muted-foreground hover:text-foreground"
-          >
-            {isEnglish ? "Srpski" : "English"}
-          </a>
+          <LanguageSwitcher href={languagePath} isEnglish={isEnglish} />
           <a
             href={SITE.phoneHref}
             className="hidden sm:inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-5 py-2.5 rounded-full text-sm font-semibold shadow-card hover:shadow-glow transition-all duration-300 hover:-translate-y-0.5"
@@ -120,14 +143,9 @@ export default function Navbar() {
                 {l.label}
               </NavLink>
             ))}
-            <a
-              href={languagePath}
-              lang={isEnglish ? "sr" : "en"}
-              onClick={() => setOpen(false)}
-              className="px-4 py-3 rounded-xl text-base font-medium text-muted-foreground"
-            >
-              {isEnglish ? "Srpski" : "English"}
-            </a>
+            <div className="px-4 py-2">
+              <LanguageSwitcher href={languagePath} isEnglish={isEnglish} onClick={() => setOpen(false)} />
+            </div>
             <a
               href={SITE.phoneHref}
               className="mt-2 inline-flex items-center justify-center gap-2 bg-gradient-accent text-accent-foreground px-5 py-3 rounded-full font-semibold"

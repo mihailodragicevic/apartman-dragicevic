@@ -149,7 +149,7 @@ export default function Contact() {
       <section className="container pb-12 pt-36">
         <SectionHeading
           as="h1"
-          eyebrow={isEnglish ? "Contact" : "Kontakt"}
+          eyebrow={isEnglish ? "Contact" : "Rezervacija"}
           title={isEnglish ? <>A quick inquiry about your <em className="italic text-accent">stay</em></> : <>Brz upit za vaš <em className="italic text-accent">boravak</em></>}
           subtitle={isEnglish ? "Send us your arrival details or contact us directly on Viber or WhatsApp. We will get back to you as soon as possible." : "Pošaljite nam detalje dolaska ili se javite direktno preko Vibera i WhatsAppa. Odgovaramo u najkraćem roku."}
         />

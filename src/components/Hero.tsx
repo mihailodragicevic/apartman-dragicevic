@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Phone, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import { SITE } from "@/lib/site";
 import { publicAssetPath } from "@/lib/publicAsset";
 import TypingText from "./TypingText";
@@ -99,12 +100,12 @@ export default function Hero({ locale = "sr" }: { locale?: Locale }) {
             >
               <Phone className="hero-call-icon h-5 w-5" /> {locale === "sr" ? "Pozovite odmah" : "Call now"}
             </a>
-            <a
-              href="#detalji"
+            <Link
+              to={locale === "sr" ? "/o-nama" : "/en/about/"}
               className="hero-secondary-button inline-flex items-center gap-2 bg-card border border-border px-7 py-4 rounded-full font-medium"
             >
               {locale === "sr" ? "Saznajte više" : "Learn more"}
-            </a>
+            </Link>
           </div>
         </div>
       </div>
