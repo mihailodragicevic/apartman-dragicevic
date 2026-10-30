@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import { Phone, Menu, X } from "lucide-react";
 import logo from "@/assets/Logo_WEB 3.svg";
 import { SITE } from "@/lib/site";
@@ -14,17 +14,45 @@ function LanguageSwitcher({
   otherLanguageHref: string;
   isEnglish: boolean;
 }) {
-  const prefetchPage = (href: string) => {
-    const url = new URL(href, window.location.href);
-    url.hash = "";
-    const alreadyPrefetched = [...document.head.querySelectorAll<HTMLLinkElement>('link[rel="prefetch"]')]
-      .some((link) => link.href === url.href);
-    if (alreadyPrefetched) return;
+  const navigate = useNavigate();
 
-    const link = document.createElement("link");
-    link.rel = "prefetch";
-    link.href = url.href;
-    document.head.appendChild(link);
+  const prefetchPage = (href: string) => {
+    const { pathname } = new URL(href, window.location.href);
+    const loaders: Record<string, () => Promise<unknown>> = {
+      "/": () => import("@/pages/Index"),
+      "/en/": () => import("@/pages/EnglishHome"),
+      "/o-nama": () => import("@/pages/About"),
+      "/en/about/": () => import("@/pages/About"),
+      "/sadrzaj": () => import("@/pages/Amenities"),
+      "/en/amenities/": () => import("@/pages/EnglishAmenities"),
+      "/galerija": () => import("@/pages/Gallery"),
+      "/en/gallery/": () => import("@/pages/Gallery"),
+      "/kontakt": () => import("@/pages/Contact"),
+      "/en/contact/": () => import("@/pages/Contact"),
+    };
+
+    void loaders[pathname]?.();
+  };
+
+  const handleLanguageClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      (event.currentTarget.target && event.currentTarget.target !== "_self") ||
+      event.currentTarget.hasAttribute("download")
+    ) {
+      return;
+    }
+
+    const url = new URL(event.currentTarget.href);
+    if (url.origin !== window.location.origin) return;
+
+    event.preventDefault();
+    navigate(`${url.pathname}${url.search}${url.hash}`);
   };
 
   const optionClassName = (isCurrent: boolean) =>
@@ -54,6 +82,7 @@ function LanguageSwitcher({
         aria-label={isEnglish ? "Prebaci na srpski" : "Srpski, trenutni jezik"}
         aria-current={isEnglish ? undefined : "page"}
         className={optionClassName(!isEnglish)}
+        onClick={handleLanguageClick}
         onPointerEnter={() => isEnglish && prefetchPage(otherLanguageHref)}
         onFocus={() => isEnglish && prefetchPage(otherLanguageHref)}
         onTouchStart={() => isEnglish && prefetchPage(otherLanguageHref)}
@@ -67,6 +96,7 @@ function LanguageSwitcher({
         aria-label={isEnglish ? "English, current language" : "Switch to English"}
         aria-current={isEnglish ? "page" : undefined}
         className={optionClassName(isEnglish)}
+        onClick={handleLanguageClick}
         onPointerEnter={() => !isEnglish && prefetchPage(otherLanguageHref)}
         onFocus={() => !isEnglish && prefetchPage(otherLanguageHref)}
         onTouchStart={() => !isEnglish && prefetchPage(otherLanguageHref)}
@@ -103,6 +133,10 @@ export default function Navbar() {
       ];
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -150,13 +184,11 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <div className={cn(open && "max-md:hidden")}>
-            <LanguageSwitcher
-              currentHref={currentHref}
-              otherLanguageHref={otherLanguageHref}
-              isEnglish={isEnglish}
-            />
-          </div>
+          <LanguageSwitcher
+            currentHref={currentHref}
+            otherLanguageHref={otherLanguageHref}
+            isEnglish={isEnglish}
+          />
           <a
             href={SITE.phoneHref}
             className="hidden sm:inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground px-5 py-2.5 rounded-full text-sm font-semibold shadow-card hover:shadow-glow transition-all duration-300 hover:-translate-y-0.5"

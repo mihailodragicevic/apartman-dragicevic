@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Index from "./pages/Index";
 
 const About = lazy(() => import("./pages/About"));
@@ -12,6 +13,7 @@ const EnglishAmenities = lazy(() => import("./pages/EnglishAmenities"));
 
 const App = () => (
   <BrowserRouter>
+    <Navbar />
     <Suspense fallback={<div className="min-h-screen bg-background" aria-hidden />}>
       <Routes>
         <Route path="/" element={<Index />} />

@@ -312,13 +312,19 @@ const main = async () => {
   });
 
   try {
+    const { default: Navbar } = await vite.ssrLoadModule("/src/components/Navbar.tsx");
     for (const page of pages) {
       const { default: Page } = await vite.ssrLoadModule(page.module);
       const renderedMarkup = renderToString(
         React.createElement(
           MemoryRouter,
           { initialEntries: [page.path] },
-          React.createElement(Page),
+          React.createElement(
+            React.Fragment,
+            null,
+            React.createElement(Navbar),
+            React.createElement(Page),
+          ),
         ),
       );
       const markupWithBuiltAssets = renderedMarkup.replace(
